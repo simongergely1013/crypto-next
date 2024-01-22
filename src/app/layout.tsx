@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { inter } from './fonts'
+import { spaceGrotesk } from './fonts'
+import NavBar from './ui/navbar/navbar'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -14,7 +15,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${spaceGrotesk.className} antialiased`}>
+      <NavBar/>
+        {children}
+        </body>
     </html>
   )
 }
