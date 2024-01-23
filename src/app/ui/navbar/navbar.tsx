@@ -4,15 +4,19 @@ import ExchangesIcon from './icons/exchangesIcon';
 import GreenTriangle from './icons/greenTriangle';
 import RedTriangle from './icons/redTriangle';
 import ProgessBarSmall from './progressBarSmall';
-
+import AppLogo from './icons/appLogo';
+import HomeIcon from './icons/homeIcon';
+import PortfolioIcon from './icons/portfolioIcon';
+import Search from './search';
 
 const styles = {
     main:'',
-    top: 'flex items-center justify-center gap-5 bg-[#1F1934] text-[#D1D1D1] text-xs py-4 border-b border-slate-900',
-    bottom: 'flex items-center justify-center',
+    top: 'flex items-center justify-center gap-10 bg-[#1F1934] text-[#D1D1D1] text-xs py-4 border-b border-slate-900',
+    bottom: 'flex items-center gap-2 p-6 border',
     flex: 'flex items-center gap-1',
     span: 'text-[#FFF]',
     progressBar: 'h-full absolute rounded',
+    logoContainer: 'flex items-center gap-2'
 }
 
 export default function NavBar() {
@@ -36,7 +40,12 @@ export default function NavBar() {
                 <div className={styles.flex}><img src={coinsTableData[0].image} alt='btc-logo' width={24} height={24}/><span className={styles.span}>{btcDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-[#F7931A]`} width={`${btcDominance}%`}/></div>
                 <div className={styles.flex}><img src={coinsTableData[1].image} alt='eth-logo' width={24} height={24}/><span className={styles.span}>{ethDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-[#849DFF]`} width={`${ethDominance}%`}/></div>
             </div>
-            <div className={styles.bottom}></div>
+            <div className={styles.bottom}>
+                <div className={styles.logoContainer}><AppLogo/><span className='text-[21px] font-bold'>CryptoSphere</span></div>
+                <div className={styles.flex}><HomeIcon/><span>Home</span></div>
+                <div className={styles.flex}><PortfolioIcon/><span>Portfolio</span></div>
+                <div><Search/></div>
+            </div>
         </div>
     )
 };
