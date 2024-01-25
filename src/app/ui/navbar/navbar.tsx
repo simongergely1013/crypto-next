@@ -13,7 +13,6 @@ import Search from './search/search';
 import CurrencyChange from './currencyChange/currencyChange';
 import ThemeSwitch from './themeSwitch/themeSwitch';
 import Link from 'next/link';
-import clsx from 'clsx';
 
 const styles = {
     main:'',
@@ -56,8 +55,8 @@ export default function NavBar() {
                             <div className={styles.logoContainer}><AppLogo/><span className='text-[21px] font-bold'>CryptoSphere</span></div>
                         </div>
                         <div className='w-1/2 flex'>
-                            <div className='w-1/2'><Link href={"/"} className={styles.link}><HomeIcon/><span className={clsx('text-white/50', {'text-white' : pathname === '/'})}>Home</span></Link></div>
-                            <div className='w-1/2'><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={clsx('text-white/50', {'text-white' : pathname === '/portfolio'})}>Portfolio</span></Link></div>
+                            <div className='w-1/2'><Link href={"/"} className={styles.link}><HomeIcon/><span className={pathname === '/' ? 'text-white transition-all ease-in-out' : 'text-white/50 transition-all ease-in-out'}>Home</span></Link></div>
+                            <div className='w-1/2'><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={pathname === '/portfolio' ? 'text-white transition-all ease-in-out' : 'text-white/50 transition-all ease-in-out'}>Portfolio</span></Link></div>
                         </div>
                 </div>
                 <div className='w-1/2 flex justify-end gap-6'>
