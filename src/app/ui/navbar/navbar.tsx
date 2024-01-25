@@ -1,4 +1,6 @@
+'use client';
 import {navBarData, coinsTableData} from '../../lib/placerholder-data';
+import { usePathname } from 'next/navigation';
 import ActiveCoinsIcon from './icons/activeCoinsIcon';
 import ExchangesIcon from './icons/exchangesIcon';
 import GreenTriangle from './icons/greenTriangle';
@@ -10,6 +12,8 @@ import PortfolioIcon from './icons/portfolioIcon';
 import Search from './search/search';
 import CurrencyChange from './currencyChange/currencyChange';
 import ThemeSwitch from './themeSwitch/themeSwitch';
+import Link from 'next/link';
+import clsx from 'clsx';
 
 const styles = {
     main:'',
@@ -18,7 +22,10 @@ const styles = {
     flex: 'flex items-center gap-1',
     span: 'text-[#FFF]',
     progressBar: 'h-full absolute rounded',
-    logoContainer: 'flex items-center gap-2'
+    logoContainer: 'flex items-center gap-2',
+    bottomLeft: 'w-1/2 flex',
+    linkContainer: 'w-1/2',
+    link: 'flex items-center justify-center gap-2'
 }
 
 export default function NavBar() {
@@ -31,6 +38,7 @@ export default function NavBar() {
     const volumeToMktCapPerc = Math.round((data.total_volume.usd / data.total_market_cap.usd) * 100);
     const btcDominance = Math.round(data.market_cap_percentage.btc);
     const ethDominance = Math.round(data.market_cap_percentage.eth);
+    const pathname = usePathname();
 
     return(
         <div>
@@ -43,13 +51,13 @@ export default function NavBar() {
                 <div className={styles.flex}><img src={coinsTableData[1].image} alt='eth-logo' width={24} height={24}/><span className={styles.span}>{ethDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-[#849DFF]`} width={`${ethDominance}%`}/></div>
             </div>
             <div className={styles.bottom}>
-                    <div className='w-1/2 flex'>
+                    <div className={styles.bottomLeft}>
                         <div className='w-1/2'>
                             <div className={styles.logoContainer}><AppLogo/><span className='text-[21px] font-bold'>CryptoSphere</span></div>
                         </div>
                         <div className='w-1/2 flex'>
-                            <div className="w-1/2 flex items-center justify-center gap-1"><HomeIcon/><span>Home</span></div>
-                            <div className="w-1/2 flex items-center justify-center gap-1"><PortfolioIcon/><span>Portfolio</span></div>
+                            <div className='w-1/2'><Link href={"/"} className={styles.link}><HomeIcon/><span className={clsx('text-white/50', {'text-white' : pathname === '/'})}>Home</span></Link></div>
+                            <div className='w-1/2'><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={clsx('text-white/50', {'text-white' : pathname === '/portfolio'})}>Portfolio</span></Link></div>
                         </div>
                 </div>
                 <div className='w-1/2 flex justify-end gap-6'>
