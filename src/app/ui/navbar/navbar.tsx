@@ -23,8 +23,12 @@ const styles = {
     progressBar: 'h-full absolute rounded',
     logoContainer: 'flex items-center gap-2',
     bottomLeft: 'w-1/2 flex',
+    bottomRight: 'w-1/2 flex justify-end gap-6',
     linkContainer: 'w-1/2',
-    link: 'flex items-center justify-center gap-2'
+    link: 'flex items-center justify-center gap-2',
+    textWhite: 'text-white transition-all ease-in-out',
+    textSemiWhite: 'text-white/50 transition-all ease-in-out',
+    width: 'w-1/2'
 }
 
 export default function NavBar() {
@@ -51,15 +55,15 @@ export default function NavBar() {
             </div>
             <div className={styles.bottom}>
                     <div className={styles.bottomLeft}>
-                        <div className='w-1/2'>
+                        <div className={styles.width}>
                             <div className={styles.logoContainer}><AppLogo/><span className='text-[21px] font-bold'>CryptoSphere</span></div>
                         </div>
                         <div className='w-1/2 flex'>
-                            <div className='w-1/2'><Link href={"/"} className={styles.link}><HomeIcon/><span className={pathname === '/' ? 'text-white transition-all ease-in-out' : 'text-white/50 transition-all ease-in-out'}>Home</span></Link></div>
-                            <div className='w-1/2'><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={pathname === '/portfolio' ? 'text-white transition-all ease-in-out' : 'text-white/50 transition-all ease-in-out'}>Portfolio</span></Link></div>
+                            <div className={styles.width}><Link href={"/"} className={styles.link}><HomeIcon/><span className={pathname === '/' ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Home</span></Link></div>
+                            <div className={styles.width}><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={pathname === '/portfolio' ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Portfolio</span></Link></div>
                         </div>
                 </div>
-                <div className='w-1/2 flex justify-end gap-6'>
+                <div className={styles.bottomRight}>
                     <div><Search/></div>
                     <div><CurrencyChange/></div>
                     <div><ThemeSwitch/></div>
