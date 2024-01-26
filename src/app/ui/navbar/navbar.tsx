@@ -1,22 +1,34 @@
+'use client';
 import {navBarData, coinsTableData} from '../../lib/placerholder-data';
+import { usePathname } from 'next/navigation';
 import ActiveCoinsIcon from './icons/activeCoinsIcon';
 import ExchangesIcon from './icons/exchangesIcon';
 import GreenTriangle from './icons/greenTriangle';
 import RedTriangle from './icons/redTriangle';
-import ProgessBarSmall from './progressBarSmall';
+import ProgessBarSmall from './progressBarSmall/progressBarSmall';
 import AppLogo from './icons/appLogo';
 import HomeIcon from './icons/homeIcon';
 import PortfolioIcon from './icons/portfolioIcon';
-import Search from './search';
+import Search from './search/search';
+import CurrencyChange from './currencyChange/currencyChange';
+import ThemeSwitch from './themeSwitch/themeSwitch';
+import Link from 'next/link';
 
 const styles = {
     main:'',
     top: 'flex items-center justify-center gap-10 bg-[#1F1934] text-[#D1D1D1] text-xs py-4 border-b border-slate-900',
-    bottom: 'flex items-center gap-2 p-6 border',
+    bottom: 'flex items-center gap-2 p-6',
     flex: 'flex items-center gap-1',
     span: 'text-[#FFF]',
     progressBar: 'h-full absolute rounded',
-    logoContainer: 'flex items-center gap-2'
+    logoContainer: 'flex items-center gap-2',
+    bottomLeft: 'w-1/2 flex',
+    bottomRight: 'w-1/2 flex justify-end gap-6',
+    linkContainer: 'w-1/2',
+    link: 'flex items-center justify-center gap-2',
+    textWhite: 'text-white transition-all ease-in-out',
+    textSemiWhite: 'text-white/50 transition-all ease-in-out',
+    width: 'w-1/2'
 }
 
 export default function NavBar() {
@@ -29,6 +41,7 @@ export default function NavBar() {
     const volumeToMktCapPerc = Math.round((data.total_volume.usd / data.total_market_cap.usd) * 100);
     const btcDominance = Math.round(data.market_cap_percentage.btc);
     const ethDominance = Math.round(data.market_cap_percentage.eth);
+    const pathname = usePathname();
 
     return(
         <div>
@@ -41,10 +54,20 @@ export default function NavBar() {
                 <div className={styles.flex}><img src={coinsTableData[1].image} alt='eth-logo' width={24} height={24}/><span className={styles.span}>{ethDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-[#849DFF]`} width={`${ethDominance}%`}/></div>
             </div>
             <div className={styles.bottom}>
-                <div className={styles.logoContainer}><AppLogo/><span className='text-[21px] font-bold'>CryptoSphere</span></div>
-                <div className={styles.flex}><HomeIcon/><span>Home</span></div>
-                <div className={styles.flex}><PortfolioIcon/><span>Portfolio</span></div>
-                <div><Search/></div>
+                    <div className={styles.bottomLeft}>
+                        <div className={styles.width}>
+                            <div className={styles.logoContainer}><AppLogo/><span className='text-[21px] font-bold'>CryptoSphere</span></div>
+                        </div>
+                        <div className='w-1/2 flex'>
+                            <div className={styles.width}><Link href={"/"} className={styles.link}><HomeIcon/><span className={pathname === '/' ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Home</span></Link></div>
+                            <div className={styles.width}><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={pathname === '/portfolio' ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Portfolio</span></Link></div>
+                        </div>
+                </div>
+                <div className={styles.bottomRight}>
+                    <div><Search/></div>
+                    <div><CurrencyChange/></div>
+                    <div><ThemeSwitch/></div>
+                </div>
             </div>
         </div>
     )
