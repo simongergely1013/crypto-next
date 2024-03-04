@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import GreenTriangle from "./icons/greenTriangle";
 import RedTriangle from "./icons/redTriangle";
 
@@ -20,13 +21,17 @@ interface Props {
 const CoinSlide = ({name, symbol, src, currentPrice, priceChangePercentage, bg, onClick}: Props) => {
     const isPositive = priceChangePercentage >= 0;
 
+    const loader = () => {
+        return src;
+    }
+
     return(
         <div className={`${styles.main} ${bg}`} onClick={onClick}>
             <div className="">
-                <img className={styles.img} src={src}/>
+                <Image width={32} height={32} alt="coin-logo" loader={loader} src={src}/>
             </div>
             <div className="w-2/3">
-                <div className="flex gap-1 text-[#FFFFFF] text-base"><span>{name}</span><span>({symbol.toUpperCase()})</span></div>
+                <div className="flex gap-1 text-[#FFFFFF] text-sm"><span>{name}</span><span>({symbol.toUpperCase()})</span></div>
                 <div className="flex items-center gap-1 text-sm">
                     <span className="text-[#D1D1D1]">{currentPrice}</span>
                     {isPositive ? <GreenTriangle/> : <RedTriangle/>}

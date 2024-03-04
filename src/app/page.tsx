@@ -1,8 +1,10 @@
 'use client';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { coinsTableData } from "./lib/placerholder-data";
 import Link from "next/link";
 import CoinSlide from "./ui/navbar/coinSlide";
+import CoinSliderChevronLeft from "./ui/navbar/buttons/coinSliderChevronLeft";
+import CoinSliderChevronRight from "./ui/navbar/buttons/coinSliderChevronRight";
 
 const styles = {
   main: 'flex min-h-screen flex-col px-20 py-6 border',
@@ -10,17 +12,29 @@ const styles = {
   active: 'bg-[#6161de] border border-opacity-60 border-[#7878FF]',
   inactive: 'bg-[#232337]',
   linkContainer: "flex mb-20",
-  coinsSlider: 'flex gap-2',
+  coinsSlider: 'relative flex items-center gap-2',
+}
+
+interface Slide {
+  name: string;
+  symbol: string;
+  image: string;
+  current_price: number;
+  price_change_percentage_24h: number;
 }
 
 export default function Home() {
-  const [currentCoin, setCurrentCoin] = useState("btc");
+  const [currentCoin, setCurrentCoin] = useState<string>("btc");
+  const [currentCoins, setCurrentCoins] = useState<Slide[]>([]);
+  const [index, setIndex] = useState<number>(0);
 
-  const btc = coinsTableData[0];
-  const eth = coinsTableData[1];
-  const teth = coinsTableData[2];
-  const binanceCoin = coinsTableData[3];
-  const solana = coinsTableData[4];
+  useEffect(() => {
+    const updateCurrentCoins = [];
+    for(let i = index; i < index + 5; i++){
+      updateCurrentCoins.push(coinsTableData[i]);
+    }
+    setCurrentCoins([...updateCurrentCoins])
+  }, [index])
 
   return (
     <main className={styles.main}>
@@ -29,11 +43,9 @@ export default function Home() {
               <Link href={"/convertor"} className={styles.button}>Convertor</Link>
       </div>
       <div className={styles.coinsSlider}>
-        <CoinSlide name={btc.name} symbol={btc.symbol} src={btc.image} currentPrice={btc.current_price} priceChangePercentage={btc.price_change_percentage_24h} onClick={() => setCurrentCoin(btc.symbol)} bg={currentCoin === btc.symbol ? styles.active : styles.inactive}/>
-        <CoinSlide name={eth.name} symbol={eth.symbol} src={eth.image} currentPrice={eth.current_price} priceChangePercentage={eth.price_change_percentage_24h} onClick={() => setCurrentCoin(eth.symbol)} bg={currentCoin === eth.symbol ? styles.active : styles.inactive}/>
-        <CoinSlide name={teth.name} symbol={teth.symbol} src={teth.image} currentPrice={teth.current_price} priceChangePercentage={teth.price_change_percentage_24h} onClick={() => setCurrentCoin(teth.symbol)} bg={currentCoin === teth.symbol ? styles.active : styles.inactive}/>
-        <CoinSlide name={binanceCoin.name} symbol={binanceCoin.symbol} src={binanceCoin.image} currentPrice={binanceCoin.current_price} priceChangePercentage={binanceCoin.price_change_percentage_24h} onClick={() => setCurrentCoin(binanceCoin.symbol)} bg={currentCoin === binanceCoin.symbol ? styles.active : styles.inactive}/>
-        <CoinSlide name={solana.name} symbol={solana.symbol} src={solana.image} currentPrice={solana.current_price} priceChangePercentage={solana.price_change_percentage_24h} onClick={() => setCurrentCoin(solana.symbol)} bg={currentCoin === solana.symbol ? styles.active : styles.inactive}/>
+        {index > 4 && <CoinSliderChevronLeft onClick={() => setIndex(index - 5)}/>}
+       {currentCoins.map((el: Slide) => <CoinSlide key={el.name} name={el.name} symbol={el.symbol} src={el.image} currentPrice={el.current_price} priceChangePercentage={el.price_change_percentage_24h} onClick={() => setCurrentCoin(el.symbol)} bg={currentCoin === el.symbol ? styles.active : styles.inactive}/>)}
+        <CoinSliderChevronRight onClick={() => setIndex(index + 5)}/>
       </div>
     </main>
   )
