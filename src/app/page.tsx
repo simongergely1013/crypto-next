@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from "react";
 import { coinsTableData } from "./lib/placerholder-data";
+import { BarLoader } from "react-spinners";
 import Link from "next/link";
 import CoinSlide from "./ui/navbar/coinSlide";
 import CoinSliderChevronLeft from "./ui/navbar/buttons/coinSliderChevronLeft";
@@ -27,13 +28,16 @@ export default function Home() {
   const [currentCoin, setCurrentCoin] = useState<string>("btc");
   const [currentCoins, setCurrentCoins] = useState<Slide[]>([]);
   const [index, setIndex] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setIsLoading(true);
     const updateCurrentCoins = [];
     for(let i = index; i < index + 5; i++){
       updateCurrentCoins.push(coinsTableData[i]);
     }
     setCurrentCoins([...updateCurrentCoins])
+    setIsLoading(false);
   }, [index])
 
   return (
@@ -42,11 +46,12 @@ export default function Home() {
       <Link href={"/"} className={`${styles.button} ${styles.active}`}>Coins</Link>
               <Link href={"/convertor"} className={styles.button}>Convertor</Link>
       </div>
-      <div className={styles.coinsSlider}>
+      {isLoading ? <div className="flex justify-center items-center"><BarLoader width={800} height={6} color="#36d7b7"/></div> 
+      : <div className={styles.coinsSlider}>
         {index > 4 && <CoinSliderChevronLeft onClick={() => setIndex(index - 5)}/>}
        {currentCoins.map((el: Slide) => <CoinSlide key={el.name} name={el.name} symbol={el.symbol} src={el.image} currentPrice={el.current_price} priceChangePercentage={el.price_change_percentage_24h} onClick={() => setCurrentCoin(el.symbol)} bg={currentCoin === el.symbol ? styles.active : styles.inactive}/>)}
         <CoinSliderChevronRight onClick={() => setIndex(index + 5)}/>
-      </div>
+      </div>}
     </main>
   )
 }

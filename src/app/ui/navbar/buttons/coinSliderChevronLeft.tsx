@@ -5,7 +5,7 @@ interface ChevronProps {
 }
 
 const styles = {
-    main: "absolute z-10 -left-10 flex justify-center items-center w-12 h-10 rounded-full bg-[#6161D680] cursor-pointer"
+    main: "absolute z-10 -left-8 flex justify-center items-center w-10 h-10 rounded-full bg-[#6161D680] cursor-pointer"
 }
 
 const CoinSliderChevronLeft = ({onClick}: ChevronProps) => {
