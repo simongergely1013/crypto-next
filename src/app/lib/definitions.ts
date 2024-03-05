@@ -1,4 +1,4 @@
-export type NavBar = {
+export interface NavBar {
     active_cryptocurrencies: number;
     upcoming_icos: number;
     ongoing_icos: number;
@@ -11,13 +11,13 @@ export type NavBar = {
     updated_at: number;
 }
 
-export type BtcChartsData = {
+export interface BtcChartsData {
     prices: Array<[number, number]>;
     market_caps: Array<[number, number]>;
     total_volumes: Array<[number, number]>;
 }
 
-export type CoinsTableData = {
+export interface CoinsTableData {
     id: string;
     symbol: string;
     name: string;

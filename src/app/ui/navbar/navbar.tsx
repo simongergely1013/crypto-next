@@ -42,6 +42,7 @@ export default function NavBar() {
     const btcDominance = Math.round(data.market_cap_percentage.btc);
     const ethDominance = Math.round(data.market_cap_percentage.eth);
     const pathname = usePathname();
+    const isHome = pathname === "/" || pathname === "/convertor";
 
     return(
         <div>
@@ -59,7 +60,7 @@ export default function NavBar() {
                             <div className={styles.logoContainer}><AppLogo/><span className='text-[21px] font-bold'>CryptoSphere</span></div>
                         </div>
                         <div className='w-1/2 flex'>
-                            <div className={styles.width}><Link href={"/"} className={styles.link}><HomeIcon/><span className={pathname === '/' ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Home</span></Link></div>
+                            <div className={styles.width}><Link href={"/"} className={styles.link}><HomeIcon/><span className={isHome ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Home</span></Link></div>
                             <div className={styles.width}><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={pathname === '/portfolio' ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Portfolio</span></Link></div>
                         </div>
                 </div>
