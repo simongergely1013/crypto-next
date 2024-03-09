@@ -6,7 +6,7 @@ import RedTriangle from "./icons/redTriangle";
 const styles = {
     main: "flex items-center justify-around w-[250px] h-[78px] p-4 bg-opacity-50 transition-bg ease-in-out rounded cursor-pointer",
     img: "w-8 h-8"
-}
+};
 
 interface Props {
     name: string;
@@ -23,7 +23,7 @@ const CoinSlide = ({name, symbol, src, currentPrice, priceChangePercentage, bg, 
 
     const loader = () => {
         return src;
-    }
+    };
 
     return(
         <div className={`${styles.main} ${bg}`} onClick={onClick}>
@@ -39,7 +39,7 @@ const CoinSlide = ({name, symbol, src, currentPrice, priceChangePercentage, bg, 
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default CoinSlide;
