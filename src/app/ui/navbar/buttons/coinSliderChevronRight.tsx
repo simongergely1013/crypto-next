@@ -6,7 +6,7 @@ interface ChevronProps {
 
 const styles = {
     main: "absolute z-10 -right-8 flex justify-center items-center w-10 h-10 rounded-full bg-[#6161D680] cursor-pointer"
-}
+};
 
 const CoinSliderChevronRight = ({onClick}: ChevronProps) => {
     return(
@@ -15,7 +15,7 @@ const CoinSliderChevronRight = ({onClick}: ChevronProps) => {
             <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
             </svg>
         </div>
-    )
-}
+    );
+};
 
 export default CoinSliderChevronRight;

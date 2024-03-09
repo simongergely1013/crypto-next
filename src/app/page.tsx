@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useEffect, useState } from "react";
 import { coinsTableData } from "./lib/placerholder-data";
 import { BarLoader } from "react-spinners";
@@ -8,13 +8,13 @@ import CoinSliderChevronLeft from "./ui/navbar/buttons/coinSliderChevronLeft";
 import CoinSliderChevronRight from "./ui/navbar/buttons/coinSliderChevronRight";
 
 const styles = {
-  main: 'flex min-h-screen flex-col px-20 py-6 border',
-  button: 'w-[244px] h-[45px] flex justify-center items-center bg-[#232337] bg-opacity-50 transition-bg ease-in-out rounded',
-  active: 'bg-[#6161de] border border-opacity-60 border-[#7878FF]',
-  inactive: 'bg-[#232337]',
+  main: "flex min-h-screen flex-col px-20 py-6 border",
+  button: "w-[244px] h-[45px] flex justify-center items-center bg-[#232337] bg-opacity-50 transition-bg ease-in-out rounded",
+  active: "bg-[#6161de] border border-opacity-60 border-[#7878FF]",
+  inactive: "bg-[#232337]",
   linkContainer: "flex mb-20",
-  coinsSlider: 'relative flex items-center gap-2',
-}
+  coinsSlider: "relative flex items-center gap-2",
+};
 
 interface Slide {
   name: string;
@@ -36,9 +36,9 @@ export default function Home() {
     for(let i = index; i < index + 5; i++){
       updateCurrentCoins.push(coinsTableData[i]);
     }
-    setCurrentCoins([...updateCurrentCoins])
+    setCurrentCoins([...updateCurrentCoins]);
     setIsLoading(false);
-  }, [index])
+  }, [index]);
 
   return (
     <main className={styles.main}>
@@ -53,5 +53,5 @@ export default function Home() {
         <CoinSliderChevronRight onClick={() => setIndex(index + 5)}/>
       </div>}
     </main>
-  )
+  );
 }

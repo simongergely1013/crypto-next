@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 
 const Page = ({params}: {params: {id: string}}) => {
 
@@ -6,7 +6,7 @@ const Page = ({params}: {params: {id: string}}) => {
         <div>
             <p>{params.id}</p>
         </div>
-    )
-}
+    );
+};
 
 export default Page;
