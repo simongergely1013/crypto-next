@@ -13,7 +13,6 @@ import Search from "./search/search";
 import CurrencyChange from "./currencyChange/currencyChange";
 import ThemeSwitch from "./themeSwitch/themeSwitch";
 import Link from "next/link";
-import Image from "next/image";
 
 const styles = {
     main:"",
@@ -50,10 +49,10 @@ export default function NavBar() {
             <div className={styles.top}>
                 <div className={styles.flex}><ActiveCoinsIcon/>Coins:<span className={styles.span}>{data.active_cryptocurrencies}</span></div>
                 <div className={styles.flex}><ExchangesIcon/> Exchanges:<span className={styles.span}>{data.markets}</span></div>
-                <div className={"flex items-center"}>Market Cap:<span className={`${styles.span} ml-1`}>$ {marketCap}</span>{isPositive ? <GreenTriangle/> : <RedTriangle/>}<span className={`${isPositive ? "text-[#01F1E3]" : "text-[#FE2264]"}`}>{marketCapPercChng}%</span></div>
+                <div className={"flex items-center"}>Market Cap:<span className={`${styles.span} ml-1`}>$ {marketCap}</span>{isPositive ? <GreenTriangle/> : <RedTriangle/>}<span className={`${isPositive ? "text-green" : "text-red"}`}>{marketCapPercChng}%</span></div>
                 <div className={styles.flex}>24h Volume:<span className={styles.span}>$ {totalVolume}</span><ProgessBarSmall className={`${styles.progressBar}] bg-[#FFFFFF]`} width={`${volumeToMktCapPerc}%`}/></div>
-                <div className={styles.flex}><Image src={coinsTableData[0].image} alt='btc-logo' width={24} height={24}/><span className={styles.span}>{btcDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-[#F7931A]`} width={`${btcDominance}%`}/></div>
-                <div className={styles.flex}><Image src={coinsTableData[1].image} alt='eth-logo' width={24} height={24}/><span className={styles.span}>{ethDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-[#849DFF]`} width={`${ethDominance}%`}/></div>
+                <div className={styles.flex}><img src={coinsTableData[0].image} alt='btc-logo' width={24} height={24}/><span className={styles.span}>{btcDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-progressBarBtc`} width={`${btcDominance}%`}/></div>
+                <div className={styles.flex}><img src={coinsTableData[1].image} alt='eth-logo' width={24} height={24}/><span className={styles.span}>{ethDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-progressBarEth`} width={`${ethDominance}%`}/></div>
             </div>
             <div className={styles.bottom}>
                     <div className={styles.bottomLeft}>

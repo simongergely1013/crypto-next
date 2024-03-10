@@ -35,7 +35,7 @@ const CoinSlide = ({name, symbol, src, currentPrice, priceChangePercentage, bg, 
                 <div className="flex items-center gap-1 text-sm">
                     <span className="text-[#D1D1D1]">{currentPrice}</span>
                     {isPositive ? <GreenTriangle/> : <RedTriangle/>}
-                    <span className={isPositive ? "text-[#01F1E3]" : "text-[#FE2264]"}>{priceChangePercentage.toFixed(2)}%</span>
+                    <span className={isPositive ? "text-green" : "text-red"}>{priceChangePercentage.toFixed(2)}%</span>
                 </div>
             </div>
         </div>

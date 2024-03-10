@@ -3,9 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --darkPrimary: #13121A;
+  --darkSeconday: #191925;
+  --darkTextPrimary: #FFFFFF;
+  --darkTextSecondary: #D1D1D1;
+  --darkNavTop: #1F1934;
+  --darkChartL: #191932;
+  --darChartR: #1E1932;
+  --darkInactive: #232336;
+
+  --lightPrimary: #F3F5F9;
+  --lightSecondary: #FFFFFF;
+  --lightTextPrimary: #232336;
+  --lightTextSecondary:#424286;
+  --lightNavTop:#353570;
+  --lightChartL:#FFFFFF;
+  --lightChartR:#FFFFFF;
+  --lightDuration:#CCCCFA66;
+  --lightInactive: #FFFFFF;
+
+
+  --green: #01F1E3;
+  --red:#FE2264;
+  --progressBarBtc: #F7931A;
+  --progressBarEth: #849DFF;
+  --activeBg:#6161de;
+
 }
 
 @media (prefers-color-scheme: dark) {
