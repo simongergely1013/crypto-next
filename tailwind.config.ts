@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        light: {
+        dark: {
           primaryBg: "var(--darkPrimary)",
           secondaryBg: "var(--darkSecondary)",
           textPrimary: "var(--darkTextPrimary)",
@@ -19,7 +19,7 @@ const config: Config = {
           chartRL: "var(--darChartR)",
           inactiveBg: "var(--darkInactive)"
         },
-        dark: {
+        light: {
           primaryBg: "var(--lightPrimary)",
           secondaryBg: "var(--lightSecondary)",
           textPrimary: "var(--lightTextPrimary)",

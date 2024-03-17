@@ -1,6 +1,8 @@
 "use client";
 import {navBarData, coinsTableData} from "../../lib/placerholder-data";
 import { usePathname } from "next/navigation";
+import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
+import { toggleTheme } from "@/app/lib/features/app/themeSlice";
 import ActiveCoinsIcon from "./icons/activeCoinsIcon";
 import ExchangesIcon from "./icons/exchangesIcon";
 import GreenTriangle from "./icons/greenTriangle";
@@ -15,23 +17,26 @@ import ThemeSwitch from "./themeSwitch/themeSwitch";
 import Link from "next/link";
 
 const styles = {
-    main:"",
-    top: "flex items-center justify-center gap-10 bg-[#1F1934] text-[#D1D1D1] text-xs py-4 border-b border-slate-900",
+    top: "flex items-center justify-center gap-10 text-xs py-4 border-b border-slate-900 transition-bg ease-in-out",
     bottom: "flex items-center gap-2 p-6",
+    appName: "text-[21px] font-bold",
     flex: "flex items-center gap-1",
-    span: "text-[#FFF]",
     progressBar: "h-full absolute rounded",
     logoContainer: "flex items-center gap-2",
     bottomLeft: "w-1/2 flex",
     bottomRight: "w-1/2 flex justify-end gap-6",
     linkContainer: "w-1/2",
     link: "flex items-center justify-center gap-2",
-    textWhite: "text-white transition-all ease-in-out",
-    textSemiWhite: "text-white/50 transition-all ease-in-out",
-    width: "w-1/2"
+    transition: "transition-all ease-in-out",
+    width: "w-1/2 hover:scale-110 duration-300"
 };
 
-export default function NavBar() {
+export default function NavBar({changeTheme}: any) {
+    const {isDark} = useAppSelector((state) => state.theme);
+    const topTheme = isDark ? "bg-dark-navTopBg text-dark-textSecondary" : "bg-light-navTopBg text-white";
+    const appName = isDark ? "text-dark-textPrimary" : "text-light-navTopBg";
+    const bottom = isDark ? "bg-dark-primaryBg" : "bg-light-secondaryBg";
+
     const {data} = navBarData;
     const formatter = Intl.NumberFormat("en", {notation: "compact"});
     const marketCap = formatter.format(data.total_market_cap.usd);
@@ -43,31 +48,63 @@ export default function NavBar() {
     const ethDominance = Math.round(data.market_cap_percentage.eth);
     const pathname = usePathname();
     const isHome = pathname === "/" || pathname === "/convertor";
+    const isPortfolio = pathname === "/portfolio";
+
+    const setHomeTextColor = () => {
+        if(isDark && isHome){
+            return "text-white";
+        } else if(isDark && !isHome){
+            return "text-white/50";
+        } else if(!isDark && isHome){
+            return "text-light-navTopBg";
+        } else if(!isDark && !isHome) {
+            return "text-slate-400";
+        }
+    };
+
+    const setPortfolioTextColor = () => {
+        if(isDark && isPortfolio){
+            return "text-white";
+        } else if(isDark && !isPortfolio){
+            return "text-white/50";
+        } else if(!isDark && isPortfolio){
+            return "text-light-navTopBg";
+        } else if(!isDark && !isPortfolio){
+            return "text-slate-400";
+        }
+    };
+
+    const dispatch = useAppDispatch();
+
+    const handleThemeSwitch = () => {
+        dispatch(toggleTheme(!isDark));
+        changeTheme(!isDark);
+    };
 
     return(
         <div>
-            <div className={styles.top}>
-                <div className={styles.flex}><ActiveCoinsIcon/>Coins:<span className={styles.span}>{data.active_cryptocurrencies}</span></div>
-                <div className={styles.flex}><ExchangesIcon/> Exchanges:<span className={styles.span}>{data.markets}</span></div>
-                <div className={"flex items-center"}>Market Cap:<span className={`${styles.span} ml-1`}>$ {marketCap}</span>{isPositive ? <GreenTriangle/> : <RedTriangle/>}<span className={`${isPositive ? "text-green" : "text-red"}`}>{marketCapPercChng}%</span></div>
-                <div className={styles.flex}>24h Volume:<span className={styles.span}>$ {totalVolume}</span><ProgessBarSmall className={`${styles.progressBar}] bg-[#FFFFFF]`} width={`${volumeToMktCapPerc}%`}/></div>
-                <div className={styles.flex}><img src={coinsTableData[0].image} alt='btc-logo' width={24} height={24}/><span className={styles.span}>{btcDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-progressBarBtc`} width={`${btcDominance}%`}/></div>
-                <div className={styles.flex}><img src={coinsTableData[1].image} alt='eth-logo' width={24} height={24}/><span className={styles.span}>{ethDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-progressBarEth`} width={`${ethDominance}%`}/></div>
+            <div className={`${styles.top} ${topTheme}`}>
+                <div className={styles.flex}><ActiveCoinsIcon/>Coins:<span>{data.active_cryptocurrencies}</span></div>
+                <div className={styles.flex}><ExchangesIcon/> Exchanges:<span>{data.markets}</span></div>
+                <div className={"flex items-center"}>Market Cap:<span className="ml-1">$ {marketCap}</span>{isPositive ? <GreenTriangle/> : <RedTriangle/>}<span className={`${isPositive ? "text-green" : "text-red"}`}>{marketCapPercChng}%</span></div>
+                <div className={styles.flex}>24h Volume:<span>$ {totalVolume}</span><ProgessBarSmall className={`${styles.progressBar}] bg-[#FFFFFF]`} width={`${volumeToMktCapPerc}%`}/></div>
+                <div className={styles.flex}><img src={coinsTableData[0].image} alt='btc-logo' width={24} height={24}/><span>{btcDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-progressBarBtc`} width={`${btcDominance}%`}/></div>
+                <div className={styles.flex}><img src={coinsTableData[1].image} alt='eth-logo' width={24} height={24}/><span>{ethDominance}%</span><ProgessBarSmall className={`${styles.progressBar} bg-progressBarEth`} width={`${ethDominance}%`}/></div>
             </div>
-            <div className={styles.bottom}>
+            <div className={`${styles.bottom} ${bottom}`}>
                     <div className={styles.bottomLeft}>
                         <div className={styles.width}>
-                            <div className={styles.logoContainer}><AppLogo/><span className="text-[21px] font-bold">CryptoSphere</span></div>
+                            <div className={styles.logoContainer}><AppLogo/><span className={`${styles.appName} ${appName}`}>CryptoSphere</span></div>
                         </div>
                         <div className="w-1/2 flex">
-                            <div className={styles.width}><Link href={"/"} className={styles.link}><HomeIcon/><span className={isHome ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Home</span></Link></div>
-                            <div className={styles.width}><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={pathname === "/portfolio" ? `${styles.textWhite}` : `${styles.textSemiWhite}`}>Portfolio</span></Link></div>
+                            <div className={styles.width}><Link href={"/"} className={styles.link}><HomeIcon/><span className={`${setHomeTextColor()} ${styles.transition}`}>Home</span></Link></div>
+                            <div className={styles.width}><Link href={"/portfolio"} className={styles.link}><PortfolioIcon/><span className={`${setPortfolioTextColor()} ${styles.transition}`}>Portfolio</span></Link></div>
                         </div>
                 </div>
                 <div className={styles.bottomRight}>
                     <div><Search/></div>
                     <div><CurrencyChange/></div>
-                    <div><ThemeSwitch/></div>
+                    <div><ThemeSwitch onClick={handleThemeSwitch}/></div>
                 </div>
             </div>
         </div>
