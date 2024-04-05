@@ -2,7 +2,11 @@
 import { useEffect, useState } from "react";
 import { useAppSelector } from "./lib/hooks";
 import { coinsTableData } from "./lib/placerholder-data";
+import { setCoinSlideColors } from "./lib/setCoinSlideColors";
+import { setSlideNameColor } from "./lib/setSlideNameColor";
+import { setSlidePriceColor } from "./lib/setSlidePriceColor";
 import { BarLoader } from "react-spinners";
+import { Slide } from "./types";
 import { styles } from "./styles";
 import Link from "next/link";
 import CoinSlide from "./ui/coinSlide/coinSlide";
@@ -12,14 +16,6 @@ import BtcPricesChart from "./ui/charts/btcPricesChart";
 import BtcVolumesChart from "./ui/charts/btcVolumesChart";
 import BtcChartsDurationChanger from "./ui/buttons/btcChartsDurationChanger/btcChartsDurationChanger";
 import CoinsTable from "./ui/coinsTable/coinsTable";
-
-interface Slide {
-  name: string;
-  symbol: string;
-  image: string;
-  current_price: number;
-  price_change_percentage_24h: number;
-}
 
 export default function Home() {
   const { isDark } = useAppSelector((state) => state.theme);
@@ -32,38 +28,6 @@ export default function Home() {
   const buttonColors: string = isDark
     ? "bg-[#232337] text-dark-textPrimary"
     : "bg-white text-light-textSecondary";
-
-  const setCoinSlideColors = (symbol: string) => {
-    if (isDark && currentCoin == symbol) {
-      return styles.active;
-    } else if (isDark && currentCoin != symbol) {
-      return styles.inactiveDark;
-    } else if (!isDark && currentCoin == symbol) {
-      return styles.active;
-    } else if (!isDark && currentCoin != symbol) {
-      return styles.inactiveLight;
-    } else {
-      return;
-    }
-  };
-
-  const setSlideNameColor = (symbol: string) => {
-    if (!isDark && currentCoin != symbol) {
-      return "text-[#181825]";
-    } else {
-      return "text-white";
-    }
-  };
-
-  const setSlidePriceColor = (symbol: string) => {
-    if (isDark) {
-      return "text-dark-textSecondary";
-    } else if (!isDark && currentCoin != symbol) {
-      return "text-light-textSecondary";
-    } else if (!isDark && currentCoin == symbol) {
-      return "text-white";
-    }
-  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -109,9 +73,9 @@ export default function Home() {
               currentPrice={el.current_price}
               priceChangePercentage={el.price_change_percentage_24h}
               onClick={() => setCurrentCoin(el.symbol)}
-              bg={setCoinSlideColors(el.symbol)}
-              nameColor={setSlideNameColor(el.symbol)}
-              priceColor={setSlidePriceColor(el.symbol)}
+              bg={setCoinSlideColors(el.symbol, isDark, currentCoin)}
+              nameColor={setSlideNameColor(el.symbol, isDark, currentCoin)}
+              priceColor={setSlidePriceColor(el.symbol, isDark, currentCoin)}
             />
           ))}
           <CoinSliderChevronRight onClick={() => setIndex(index + 5)} />
