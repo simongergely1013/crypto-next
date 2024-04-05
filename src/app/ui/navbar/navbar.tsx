@@ -1,35 +1,21 @@
 "use client";
+import { styles } from "./navbar.styles";
 import { navBarData, coinsTableData } from "../../lib/placerholder-data";
 import { usePathname } from "next/navigation";
 import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
 import { toggleTheme } from "@/app/lib/features/app/themeSlice";
-import ActiveCoinsIcon from "./icons/activeCoinsIcon";
-import ExchangesIcon from "./icons/exchangesIcon";
-import GreenTriangle from "./icons/greenTriangle";
-import RedTriangle from "./icons/redTriangle";
-import ProgessBarSmall from "./progressBarSmall/progressBarSmall";
-import AppLogo from "./icons/appLogo";
-import HomeIcon from "./icons/homeIcon";
-import PortfolioIcon from "./icons/portfolioIcon";
-import Search from "./search/search";
-import CurrencyChange from "./currencyChange/currencyChange";
-import ThemeSwitch from "./themeSwitch/themeSwitch";
+import ActiveCoinsIcon from "../icons/activeCoinsIcon";
+import ExchangesIcon from "../icons/exchangesIcon";
+import GreenTriangle from "../icons/greenTriangle";
+import RedTriangle from "../icons/redTriangle";
+import ProgessBarSmall from "../progressBarSmall/progressBarSmall";
+import AppLogo from "../icons/appLogo";
+import HomeIcon from "../icons/homeIcon";
+import PortfolioIcon from "../icons/portfolioIcon";
+import Search from "../search/search";
+import CurrencyChange from "../currencyChange/currencyChange";
+import ThemeSwitch from "../themeSwitch/themeSwitch";
 import Link from "next/link";
-
-const styles = {
-  top: "flex items-center justify-center gap-10 text-xs py-4 border-b border-slate-900 transition-bg ease-in-out",
-  bottom: "flex items-center gap-2 p-6",
-  appName: "text-[21px] font-bold",
-  flex: "flex items-center gap-1",
-  progressBar: "h-full absolute rounded",
-  logoContainer: "flex items-center gap-2",
-  bottomLeft: "w-1/2 flex",
-  bottomRight: "w-1/2 flex justify-end gap-6",
-  linkContainer: "w-1/2",
-  link: "flex items-center justify-center gap-2",
-  transition: "transition-all ease-in-out",
-  width: "w-1/2 hover:scale-110 duration-300",
-};
 
 export default function NavBar({ changeTheme }: any) {
   const { isDark } = useAppSelector((state) => state.theme);
@@ -53,8 +39,8 @@ export default function NavBar({ changeTheme }: any) {
   const btcDominance = Math.round(data.market_cap_percentage.btc);
   const ethDominance = Math.round(data.market_cap_percentage.eth);
   const pathname = usePathname();
-  const isHome = pathname === "/" || pathname === "/convertor";
-  const isPortfolio = pathname === "/portfolio";
+  const isHome: boolean = pathname === "/" || pathname === "/convertor";
+  const isPortfolio: boolean = pathname === "/portfolio";
 
   const setHomeTextColor = () => {
     if (isDark && isHome) {

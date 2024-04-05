@@ -1,8 +1,6 @@
-export default function Page() {
-  const styles = {
-    main: "flex min-h-screen flex-col px-20 py-6 border",
-  };
+import { styles } from "./styles";
 
+export default function Page() {
   return (
     <div className={styles.main}>
       <p>Portfolio page</p>

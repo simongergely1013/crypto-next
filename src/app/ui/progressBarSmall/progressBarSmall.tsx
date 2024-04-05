@@ -1,14 +1,10 @@
 import React from "react";
+import { styles } from "./progressBarSmall.styles";
 
 interface ProgressBarProps {
   className: string;
   width: string;
 }
-
-const styles = {
-  outerBar: "w-14 h-1.5 relative bg-slate-500 rounded",
-  innerBar: "h-full absolute rounded",
-};
 
 const ProgessBarSmall = ({ className, width }: ProgressBarProps) => {
   return (

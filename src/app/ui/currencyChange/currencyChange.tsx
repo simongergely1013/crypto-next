@@ -1,17 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { useAppSelector } from "@/app/lib/hooks";
+import { styles } from "./currencyChange.styles";
 import UsdIcon from "../icons/usdIcon";
 import EuroIcon from "../icons/euroIcon";
 import GbpIcon from "../icons/gbpIcon";
 import BtcIcon from "../icons/btcIcon";
 import EthIcon from "../icons/ethIcon";
-
-const styles = {
-  main: "relative w-[108px] h-[48px] rounded-xl",
-  select: "w-full h-full rounded-xl pl-9 cursor-pointer",
-  currencyIcon: "absolute left-2.5 top-3.5",
-};
 
 const CurrencyChange = () => {
   const [currency, setCurrency] = useState("usd");
