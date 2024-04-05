@@ -3,32 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --darkPrimary: #13121A;
+  --darkPrimary: #13121a;
   --darkSeconday: #191925;
-  --darkTextPrimary: #FFFFFF;
-  --darkTextSecondary: #D1D1D1;
-  --darkNavTop: #1F1934;
+  --darkTextPrimary: #ffffff;
+  --darkTextSecondary: #d1d1d1;
+  --darkNavTop: #1f1934;
   --darkChartL: #191932;
-  --darChartR: #1E1932;
+  --darChartR: #1e1932;
   --darkInactive: #232336;
 
-  --lightPrimary: #F3F5F9;
-  --lightSecondary: #FFFFFF;
+  --lightPrimary: #f3f5f9;
+  --lightSecondary: #ffffff;
   --lightTextPrimary: #232336;
-  --lightTextSecondary:#424286;
-  --lightNavTop:#353570;
-  --lightChartL:#FFFFFF;
-  --lightChartR:#FFFFFF;
-  --lightDuration:#CCCCFA66;
-  --lightInactive: #FFFFFF;
+  --lightTextSecondary: #424286;
+  --lightNavTop: #353570;
+  --lightChartL: #ffffff;
+  --lightChartR: #ffffff;
+  --lightDuration: #ccccfa66;
+  --lightInactive: #ffffff;
 
-
-  --green: #01F1E3;
-  --red:#FE2264;
-  --progressBarBtc: #F7931A;
-  --progressBarEth: #849DFF;
-  --activeBg:#6161de;
-
+  --green: #01f1e3;
+  --red: #fe2264;
+  --progressBarBtc: #f7931a;
+  --progressBarEth: #849dff;
+  --activeBg: #6161de;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -46,12 +44,12 @@
 body {
   color: rgb(var(--foreground-rgb));
   /* background: #13121A; */
-   /* background: linear-gradient(
+  /* background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
   max-width: 1440px;
-  margin: 0 auto;  
+  margin: 0 auto;
 }
