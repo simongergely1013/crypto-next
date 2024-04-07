@@ -31,7 +31,10 @@ export const options = {
   tension: 0.5,
 };
 
-export const pricesData = (labels: (number | "")[], data: number[]) => {
+export const pricesData = (
+  labels: (number | string | boolean)[],
+  data: (number | boolean)[]
+) => {
   return {
     labels: labels,
     datasets: [

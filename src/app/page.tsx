@@ -5,10 +5,10 @@ import { coinsTableData } from "./lib/placerholder-data";
 import { setCoinSlideColors } from "./lib/setCoinSlideColors";
 import { setSlideNameColor } from "./lib/setSlideNameColor";
 import { setSlidePriceColor } from "./lib/setSlidePriceColor";
-import { BarLoader } from "react-spinners";
 import { Slide } from "./types";
 import { styles } from "./styles";
 import Link from "next/link";
+import LoaderLandingPage from "./ui/loaders/loaderLandingPage";
 import CoinSlide from "./ui/coinSlide/coinSlide";
 import CoinSliderChevronLeft from "./ui/buttons/coinSliderChevronLeft/coinSliderChevronLeft";
 import CoinSliderChevronRight from "./ui/buttons/coinSliderChevronRight/coinSliderChevronRight";
@@ -56,43 +56,43 @@ export default function Home() {
         </Link>
       </div>
       {isLoading ? (
-        <div className="flex justify-center items-center">
-          <BarLoader width={800} height={6} color="#36d7b7" />
-        </div>
+        <LoaderLandingPage />
       ) : (
-        <div className={styles.coinsSlider}>
-          {index > 4 && (
-            <CoinSliderChevronLeft onClick={() => setIndex(index - 5)} />
-          )}
-          {currentCoins.map((el: Slide) => (
-            <CoinSlide
-              key={el.name}
-              name={el.name}
-              symbol={el.symbol}
-              src={el.image}
-              currentPrice={el.current_price}
-              priceChangePercentage={el.price_change_percentage_24h}
-              onClick={() => setCurrentCoin(el.symbol)}
-              bg={setCoinSlideColors(el.symbol, isDark, currentCoin)}
-              nameColor={setSlideNameColor(el.symbol, isDark, currentCoin)}
-              priceColor={setSlidePriceColor(el.symbol, isDark, currentCoin)}
-            />
-          ))}
-          <CoinSliderChevronRight onClick={() => setIndex(index + 5)} />
-        </div>
-      )}
-      <div className={styles.chartsWrapper}>
-        <div>
-          <div className={styles.chartsContainer}>
-            <BtcPricesChart />
-            <BtcVolumesChart />
+        <>
+          <div className={styles.coinsSlider}>
+            {index > 4 && (
+              <CoinSliderChevronLeft onClick={() => setIndex(index - 5)} />
+            )}
+            {currentCoins.map((el: Slide) => (
+              <CoinSlide
+                key={el.name}
+                name={el.name}
+                symbol={el.symbol}
+                src={el.image}
+                currentPrice={el.current_price}
+                priceChangePercentage={el.price_change_percentage_24h}
+                onClick={() => setCurrentCoin(el.symbol)}
+                bg={setCoinSlideColors(el.symbol, isDark, currentCoin)}
+                nameColor={setSlideNameColor(el.symbol, isDark, currentCoin)}
+                priceColor={setSlidePriceColor(el.symbol, isDark, currentCoin)}
+              />
+            ))}
+            <CoinSliderChevronRight onClick={() => setIndex(index + 5)} />
           </div>
-          <BtcChartsDurationChanger />
-        </div>
-      </div>
-      <div className="border">
-        <CoinsTable />
-      </div>
+          <div className={styles.chartsWrapper}>
+            <div>
+              <div className={styles.chartsContainer}>
+                <BtcPricesChart />
+                <BtcVolumesChart />
+              </div>
+              <BtcChartsDurationChanger />
+            </div>
+          </div>
+          <div className="">
+            <CoinsTable />
+          </div>
+        </>
+      )}
     </main>
   );
 }

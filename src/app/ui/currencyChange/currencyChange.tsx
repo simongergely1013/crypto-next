@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import { useAppSelector } from "@/app/lib/hooks";
+import React from "react";
+import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
 import { styles } from "./currencyChange.styles";
+import { setCurrency } from "@/app/lib/features/app/currencySlice";
 import UsdIcon from "../icons/usdIcon";
 import EuroIcon from "../icons/euroIcon";
 import GbpIcon from "../icons/gbpIcon";
@@ -9,8 +10,9 @@ import BtcIcon from "../icons/btcIcon";
 import EthIcon from "../icons/ethIcon";
 
 const CurrencyChange = () => {
-  const [currency, setCurrency] = useState("usd");
+  const { currency } = useAppSelector((state) => state.currency);
   const { isDark } = useAppSelector((state) => state.theme);
+  const dispatch = useAppDispatch();
 
   const bgColor = isDark
     ? "bg-dark-navTopBg border border-slate-700"
@@ -21,7 +23,7 @@ const CurrencyChange = () => {
 
   const handleChange = (e: any) => {
     const newCurrency = e.target.value;
-    setCurrency(newCurrency);
+    dispatch(setCurrency(newCurrency));
   };
 
   const setIcon = (currency: string) => {

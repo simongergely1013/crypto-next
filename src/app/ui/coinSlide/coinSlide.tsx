@@ -3,6 +3,7 @@ import Image from "next/image";
 import GreenTriangle from "../icons/greenTriangle";
 import RedTriangle from "../icons/redTriangle";
 import { styles } from "./coinSlide.styles";
+import { useAppSelector } from "@/app/lib/hooks";
 
 interface Props {
   name: string;
@@ -27,6 +28,11 @@ const CoinSlide = ({
   priceColor,
   onClick,
 }: Props) => {
+  const { currency } = useAppSelector((state) => state.currency);
+  const formatter = new Intl.NumberFormat("en", {
+    style: "currency",
+    currency,
+  });
   const isPositive = priceChangePercentage >= 0;
 
   const loader = () => {
@@ -50,7 +56,7 @@ const CoinSlide = ({
           <span>({symbol.toUpperCase()})</span>
         </div>
         <div className="flex items-center gap-1 text-sm">
-          <span className={priceColor}>{currentPrice}</span>
+          <span className={priceColor}>{formatter.format(currentPrice)}</span>
           {isPositive ? <GreenTriangle /> : <RedTriangle />}
           <span className={isPositive ? "text-green" : "text-red"}>
             {priceChangePercentage.toFixed(2)}%
