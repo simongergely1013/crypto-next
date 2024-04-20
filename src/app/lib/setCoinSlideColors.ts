@@ -5,13 +5,13 @@ export const setCoinSlideColors = (
   isDark: boolean,
   currentCoin: string
 ) => {
-  if (isDark && currentCoin == symbol) {
+  if (isDark && currentCoin === symbol) {
     return styles.active;
-  } else if (isDark && currentCoin != symbol) {
+  } else if (isDark && currentCoin !== symbol) {
     return styles.inactiveDark;
-  } else if (!isDark && currentCoin == symbol) {
+  } else if (!isDark && currentCoin === symbol) {
     return styles.active;
-  } else if (!isDark && currentCoin != symbol) {
+  } else if (!isDark && currentCoin !== symbol) {
     return styles.inactiveLight;
   } else {
     return;

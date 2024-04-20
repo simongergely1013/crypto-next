@@ -19,6 +19,7 @@ import Link from "next/link";
 
 export default function NavBar({ changeTheme }: any) {
   const { isDark } = useAppSelector((state) => state.theme);
+  const { currency } = useAppSelector((state) => state.currency);
   const topTheme = isDark
     ? "bg-dark-navTopBg text-dark-textSecondary"
     : "bg-light-navTopBg text-white";
@@ -26,7 +27,11 @@ export default function NavBar({ changeTheme }: any) {
   const bottom = isDark ? "bg-dark-primaryBg" : "bg-light-secondaryBg";
 
   const { data } = navBarData;
-  const formatter = Intl.NumberFormat("en", { notation: "compact" });
+  const formatter = Intl.NumberFormat("en", {
+    notation: "compact",
+    style: "currency",
+    currency,
+  });
   const marketCap = formatter.format(data.total_market_cap.usd);
   const totalVolume = formatter.format(data.total_volume.usd);
   const isPositive = data.market_cap_change_percentage_24h_usd >= 0;
@@ -84,14 +89,14 @@ export default function NavBar({ changeTheme }: any) {
           <ExchangesIcon /> Exchanges:<span>{data.markets}</span>
         </div>
         <div className={"flex items-center"}>
-          Market Cap:<span className="ml-1">$ {marketCap}</span>
+          Market Cap:<span className="ml-1">{marketCap}</span>
           {isPositive ? <GreenTriangle /> : <RedTriangle />}
           <span className={`${isPositive ? "text-green" : "text-red"}`}>
             {marketCapPercChng}%
           </span>
         </div>
         <div className={styles.flex}>
-          24h Volume:<span>$ {totalVolume}</span>
+          24h Volume:<span>{totalVolume}</span>
           <ProgessBarSmall
             className={`${styles.progressBar}] bg-[#FFFFFF]`}
             width={`${volumeToMktCapPerc}%`}

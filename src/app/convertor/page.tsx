@@ -8,7 +8,7 @@ export default function Page() {
   const mainBg = isDark ? "bg-dark-primaryBg" : "bg-slate-200";
   const buttonColors = isDark
     ? "bg-[#232337] text-dark-textPrimary"
-    : "bg-white text-light-textSecondary";
+    : "bg-[#FFFF] text-light-textSecondary";
 
   return (
     <main className={`${styles.main} ${mainBg}`}>

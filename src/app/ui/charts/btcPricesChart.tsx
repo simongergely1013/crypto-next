@@ -1,6 +1,12 @@
-import { btcChartsData } from "@/app/lib/placerholder-data";
+import { coinsTableData } from "@/app/lib/placerholder-data";
 import { options, pricesData } from "@/app/lib/btcCharts-options-data";
 import { useAppSelector } from "@/app/lib/hooks";
+import {
+  setBackgroundColor,
+  setChartTextPrimary,
+  setChartTextSecondary,
+} from "./colorSetters";
+import { styles } from "./bigCharts.styles";
 import React from "react";
 import {
   Chart as ChartJS,
@@ -25,25 +31,65 @@ ChartJS.register(
   Filler
 );
 
-const BtcPricesChart = () => {
+interface PriceChartProps {
+  coinName: string;
+  symbol: string;
+}
+
+const BtcPricesChart = ({ coinName, symbol }: PriceChartProps) => {
   const { isDark } = useAppSelector((state) => state.theme);
-  const bg = isDark ? "bg-[#191832]" : "bg-white";
-
-  //duration should be props
-
-  // labels should be props
-  const labels = btcChartsData.prices.map((el, index) => {
-    return index % 2 === 0 ? index : "";
+  const { currency } = useAppSelector((state) => state.currency);
+  const formatter = new Intl.NumberFormat("en", {
+    style: "currency",
+    currency,
   });
 
+  const currentCoinData = coinsTableData.find(
+    (el) => el.id === coinName.toLowerCase()
+  ) || { sparkline_in_7d: { price: [] } };
+
+  const currentPrice: any = coinsTableData.find(
+    (el) => el.id === coinName.toLowerCase()
+  )?.current_price;
+
+  let currentDate: any = new Date();
+  currentDate = currentDate.toDateString();
+
+  const labels: string[] = [];
+  const prices: number[] = [];
+  //duration should be props
   // prices should be props
-  const prices = btcChartsData.prices.map((el) => el[1]);
+  // labels should be props
+
+  for (let i = 0; i < currentCoinData.sparkline_in_7d.price.length; i++) {
+    labels.push("");
+  }
+
+  for (let i = 0; i < currentCoinData.sparkline_in_7d.price.length; i++) {
+    prices.push(currentCoinData.sparkline_in_7d.price[i]);
+  }
 
   //useEffect here to fetch data based on duration prop
-
+  //https://api.coingecko.com/api/v3/coins/{id}
   return (
-    <div className={`${bg} w-1/2 p-6 rounded-xl`}>
-      <Line options={options} data={pricesData(labels, prices)} />
+    <div className={`${styles.wrapper} ${setBackgroundColor(isDark)}`}>
+      <div
+        className={`${styles.infoContainer} ${setChartTextSecondary(isDark)}`}
+      >
+        <div className={`${styles.coinName} ${setChartTextSecondary(isDark)}`}>
+          <span>{coinName}</span>
+          <span>({symbol.toUpperCase()})</span>
+        </div>
+        <div className={`${styles.price} ${setChartTextPrimary(isDark)}`}>
+          {formatter.format(currentPrice)}
+        </div>
+      </div>
+      <div className={`${styles.date} ${setChartTextSecondary(isDark)}`}>
+        {currentDate}
+      </div>
+      <div className={styles.chart}>
+        <Line options={options} data={pricesData(labels, prices)} />
+      </div>
     </div>
   );
 };

@@ -20,14 +20,20 @@ import CoinsTable from "./ui/coinsTable/coinsTable";
 export default function Home() {
   const { isDark } = useAppSelector((state) => state.theme);
   // const { duration } = useAppSelector((state) => state.btcChartDuration);
-  const [currentCoin, setCurrentCoin] = useState<string>("btc");
+  const [currentCoinName, setCurrentCoinName] = useState("Bitcoin");
+  const [currentCoinSymbol, setCurrentCoinSymbol] = useState<string>("btc");
   const [currentCoins, setCurrentCoins] = useState<Slide[]>([]);
   const [index, setIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const mainBg: string = isDark ? "bg-dark-primaryBg" : "bg-slate-200";
   const buttonColors: string = isDark
     ? "bg-[#232337] text-dark-textPrimary"
-    : "bg-white text-light-textSecondary";
+    : "bg-[#FFFF] text-light-textSecondary";
+
+  const handleCoinSlideClick = (name: string, symbol: string) => {
+    setCurrentCoinName(name);
+    setCurrentCoinSymbol(symbol);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -71,10 +77,18 @@ export default function Home() {
                 src={el.image}
                 currentPrice={el.current_price}
                 priceChangePercentage={el.price_change_percentage_24h}
-                onClick={() => setCurrentCoin(el.symbol)}
-                bg={setCoinSlideColors(el.symbol, isDark, currentCoin)}
-                nameColor={setSlideNameColor(el.symbol, isDark, currentCoin)}
-                priceColor={setSlidePriceColor(el.symbol, isDark, currentCoin)}
+                onClick={() => handleCoinSlideClick(el.name, el.symbol)}
+                bg={setCoinSlideColors(el.symbol, isDark, currentCoinSymbol)}
+                nameColor={setSlideNameColor(
+                  el.symbol,
+                  isDark,
+                  currentCoinSymbol
+                )}
+                priceColor={setSlidePriceColor(
+                  el.symbol,
+                  isDark,
+                  currentCoinSymbol
+                )}
               />
             ))}
             <CoinSliderChevronRight onClick={() => setIndex(index + 5)} />
@@ -82,13 +96,16 @@ export default function Home() {
           <div className={styles.chartsWrapper}>
             <div>
               <div className={styles.chartsContainer}>
-                <BtcPricesChart />
-                <BtcVolumesChart />
+                <BtcPricesChart
+                  coinName={currentCoinName}
+                  symbol={currentCoinSymbol}
+                />
+                <BtcVolumesChart coinName={currentCoinName} />
               </div>
               <BtcChartsDurationChanger />
             </div>
           </div>
-          <div className="">
+          <div>
             <CoinsTable />
           </div>
         </>

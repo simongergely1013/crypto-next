@@ -9,14 +9,14 @@ const BtcChartsDurationChanger = () => {
   const { isDark } = useAppSelector((state) => state.theme);
   const { duration } = useAppSelector((state) => state.btcChartDuration);
   const dispatch = useAppDispatch();
-  const bg: string = isDark ? "bg-[#232336]" : "bg-[#E4E5F9]";
+  const bg: string = isDark ? "bg-[#232336]" : "bg-[#CCCCFA66]";
 
   const handleDurationChange = (value: string) => {
     dispatch(setDuration(value));
   };
 
   return (
-    <div className={`w-[392px] ${bg} flex my-12`}>
+    <div className={`w-[392px] ${bg} flex my-12 p-1 rounded-md`}>
       <button
         className={`${styles.button} ${setButtonColors(
           "1D",

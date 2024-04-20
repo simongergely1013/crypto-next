@@ -151,7 +151,7 @@ export const navBarData = {
   },
 };
 
-// https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=180&interval=daily
+// https://api.coingecko.com/api/v3/coins/{$coinName}/market_chart?vs_currency=usd&days=180&interval=daily
 export const btcChartsData = {
   prices: [
     [1690070400000, 29710.155935991766],
