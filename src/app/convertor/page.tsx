@@ -1,19 +1,18 @@
 "use client";
 import { useAppSelector } from "../lib/hooks";
-import { styles } from "./styles";
+import { setStyles } from "./styles";
 import Link from "next/link";
 
 export default function Page() {
   const { isDark } = useAppSelector((state) => state.theme);
-  const mainBg = isDark ? "bg-dark-primaryBg" : "bg-slate-200";
-  const buttonColors = isDark
-    ? "bg-[#232337] text-dark-textPrimary"
-    : "bg-[#FFFF] text-light-textSecondary";
+  const styles = setStyles(isDark);
+  let date: Date | string = new Date();
+  date = date.toLocaleString();
 
   return (
-    <main className={`${styles.main} ${mainBg}`}>
-      <div className="flex">
-        <Link href={"/"} className={`${styles.button} ${buttonColors}`}>
+    <main className={`${styles.main} ${styles.mainBg}`}>
+      <div className="flex mb-10">
+        <Link href={"/"} className={`${styles.button} ${styles.buttonColors}`}>
           Coins
         </Link>
         <Link
@@ -22,6 +21,12 @@ export default function Page() {
         >
           Convertor
         </Link>
+      </div>
+      <div className="flex flex-col gap-2">
+        <h3 className={`${styles.primaryText} text-xl`}>
+          Online currency convertor
+        </h3>
+        <h3 className={`${styles.secondaryText} text-base`}>{date}</h3>
       </div>
     </main>
   );
