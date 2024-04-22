@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import theme from "./features/app/themeSlice";
 import btcChartDuration from "./features/app/btcChartDurationSlice";
 import currency from "./features/app/currencySlice";
+import convertor from "./features/app/convertorSlice";
 
 export const makeStore = () => {
   return configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () => {
       theme,
       btcChartDuration,
       currency,
+      convertor,
     },
   });
 };
