@@ -6,7 +6,7 @@ import { setCoinSlideColors } from "./lib/setCoinSlideColors";
 import { setSlideNameColor } from "./lib/setSlideNameColor";
 import { setSlidePriceColor } from "./lib/setSlidePriceColor";
 import { Slide } from "./types";
-import { styles } from "./styles";
+import { setStyles } from "./styles";
 import Link from "next/link";
 import LoaderLandingPage from "./ui/loaders/loaderLandingPage";
 import CoinSlide from "./ui/coinSlide/coinSlide";
@@ -25,10 +25,7 @@ export default function Home() {
   const [currentCoins, setCurrentCoins] = useState<Slide[]>([]);
   const [index, setIndex] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const mainBg: string = isDark ? "bg-dark-primaryBg" : "bg-slate-200";
-  const buttonColors: string = isDark
-    ? "bg-[#232337] text-dark-textPrimary"
-    : "bg-[#FFFF] text-light-textSecondary";
+  const styles = setStyles(isDark);
 
   const handleCoinSlideClick = (name: string, symbol: string) => {
     setCurrentCoinName(name);
@@ -46,7 +43,7 @@ export default function Home() {
   }, [index]);
 
   return (
-    <main className={`${styles.main} ${mainBg}`}>
+    <main className={`${styles.main} ${styles.mainBg}`}>
       <div className={styles.linkContainer}>
         <Link
           href={"/"}
@@ -56,7 +53,7 @@ export default function Home() {
         </Link>
         <Link
           href={"/convertor"}
-          className={`${styles.button} ${buttonColors}`}
+          className={`${styles.button} ${styles.buttonColors}`}
         >
           Convertor
         </Link>
@@ -93,7 +90,7 @@ export default function Home() {
             ))}
             <CoinSliderChevronRight onClick={() => setIndex(index + 5)} />
           </div>
-          <div className={styles.chartsWrapper}>
+          <div>
             <div>
               <div className={styles.chartsContainer}>
                 <BtcPricesChart
