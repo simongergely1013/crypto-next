@@ -1,8 +1,8 @@
 "use client";
-import React from "react";
 import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
-import { styles } from "./currencyChange.styles";
 import { setCurrency } from "@/app/lib/features/app/currencySlice";
+import { setStyles } from "./currencyChange.styles";
+import React from "react";
 import UsdIcon from "../icons/usdIcon";
 import EuroIcon from "../icons/euroIcon";
 import GbpIcon from "../icons/gbpIcon";
@@ -12,14 +12,8 @@ import EthIcon from "../icons/ethIcon";
 const CurrencyChange = () => {
   const { currency } = useAppSelector((state) => state.currency);
   const { isDark } = useAppSelector((state) => state.theme);
+  const styles = setStyles(isDark);
   const dispatch = useAppDispatch();
-
-  const bgColor = isDark
-    ? "bg-dark-navTopBg border border-slate-700"
-    : "bg-slate-200";
-  const textColor = isDark
-    ? "text-dark-textPrimary"
-    : "text-light-textSecondary";
 
   const handleChange = (e: any) => {
     const newCurrency = e.target.value;
@@ -44,10 +38,10 @@ const CurrencyChange = () => {
   };
 
   return (
-    <div className={`${styles.main} ${bgColor}`}>
+    <div className={`${styles.main} ${styles.bgColor}`}>
       <div className={styles.currencyIcon}>{setIcon(currency)}</div>
       <select
-        className={`${styles.select} ${textColor} ${bgColor}`}
+        className={`${styles.select} ${styles.textColor} ${styles.bgColor}`}
         onChange={handleChange}
       >
         <option value="usd">USD</option>
