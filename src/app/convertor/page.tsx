@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../lib/hooks";
 import {
   setCurrencySell,
@@ -11,7 +12,7 @@ import EuroIcon from "../ui/icons/euroIcon";
 import BtcIcon from "../ui/icons/btcIcon";
 import EthIcon from "../ui/icons/ethIcon";
 import GbpIcon from "../ui/icons/gbpIcon";
-import { useEffect, useState } from "react";
+import ConversionButton from "../ui/buttons/conversionButton/conversionButton";
 
 export default function Page() {
   const { isDark } = useAppSelector((state) => state.theme);
@@ -81,6 +82,7 @@ export default function Page() {
         </p>
       </div>
       <div className={styles.convertorWrapper}>
+        <ConversionButton />
         <div className={`${styles.convertorContainer} ${styles.bgColor}`}>
           <h5 className={`${styles.secondaryText} ${styles.convertorHeader}`}>
             You sell

@@ -6,7 +6,7 @@ export const setStyles = (condition: boolean) => {
     headerContainer: "flex flex-col gap-2 mb-10",
     header: "text-xl font-medium",
     date: "text-base flex gap-2",
-    convertorWrapper: "flex gap-10",
+    convertorWrapper: "relative flex gap-8",
     convertorContainer: "w-1/2 p-6 rounded-xl",
     convertorHeader: "text-sm mb-6",
     inputsContainer: "relative flex justify-between py-2 my-3 border-b",
