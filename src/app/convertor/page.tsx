@@ -11,6 +11,7 @@ import { setStyles } from "./styles";
 import Link from "next/link";
 import SetCurrencyIcon from "../ui/currencyIcons/setCurrencyIcon";
 import ConversionButton from "../ui/buttons/conversionButton/conversionButton";
+import ConvertorChartDurationChanger from "../ui/buttons/convertorChartDurationChanger/convertorChartDurationChanger";
 
 export default function Page() {
   const { isDark } = useAppSelector((state) => state.theme);
@@ -42,12 +43,55 @@ export default function Page() {
     dispatch(setBuyAmount(newAmount));
   };
 
+  // const handleConversionClick = () => {
+  //   if (sellAmount === "" && buyAmount === "") {
+  //     return;
+  //   } else if (sellAmount !== "" && buyAmount === "") {
+  //     //const conversionResult = sellAmount / price of currencyBuy
+  //     //dispatch(setBuyAmount(conversionResult))
+  //   } else if (sellAmount === "" && buyAmount !== "") {
+  //     // const conversionResult = buyAmount * price of currencyBuy
+  //     // dispatch(setSellAmount(conversionResult))
+  //   }
+  // };
+
   useEffect(() => {
     const date: Date | string = new Date();
     const dateString = date.toLocaleDateString();
     const timeString = date.toLocaleTimeString();
     setCurrentDate(dateString);
     setCurrentLocalTime(timeString);
+  }, []);
+
+  //This is to update the 1 BTC = X currency part
+  //Dependencies should be [currencySell, currencyBuy]
+  //Need to fetch data 2x:
+  // 1. btc vs currencySell
+  // 2. btc vs currencyBuy
+
+  useEffect(() => {
+    // const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency}&include_market_cap=false&include_24hr_vol=false&include_24hr_change=false&include_last_updated_at=false';
+    // const options = {
+    //  method: 'GET',
+    //  headers: {accept: 'application/json', 'x-cg-demo-api-key': 'CG-aTQgu4r1cVmGP6poTHARfod9'}
+    // };
+    // fetch(url, options)
+    //   .then(res => res.json())
+    //   .then(json => console.log(json))
+    //   .catch(err => console.error('error:' + err));
+  }, []);
+
+  //This is for to FETCH CHART DATA
+  useEffect(() => {
+    // const url = 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currencySell}&days=1';
+    // const options = {
+    //   method: 'GET',
+    //   headers: {accept: 'application/json', 'x-cg-demo-api-key': 'CG-aTQgu4r1cVmGP6poTHARfod9'}
+    // };
+    // fetch(url, options)
+    //   .then(res => res.json())
+    //   .then(json => console.log(json))
+    //   .catch(err => console.error('error:' + err));
   }, []);
 
   return (
@@ -102,10 +146,10 @@ export default function Page() {
           </div>
           <div>
             <span className={`${styles.secondaryText} ${styles.inputIndexL}`}>
-              1 {currencySell.toUpperCase()} =
+              1 BTC =
             </span>
             <span className={`${styles.primaryText} ${styles.inputIndexR}`}>
-              {currencyBuy.toUpperCase()} X
+              {currencySell.toUpperCase()} X
             </span>
           </div>
         </div>
@@ -137,13 +181,16 @@ export default function Page() {
           </div>
           <div>
             <span className={`${styles.secondaryText} ${styles.inputIndexL}`}>
-              1 {currencyBuy.toUpperCase()} =
+              1 BTC =
             </span>
             <span className={`${styles.primaryText} ${styles.inputIndexR}`}>
-              {currencySell.toUpperCase()} X
+              {currencyBuy.toUpperCase()} X
             </span>
           </div>
         </div>
+      </div>
+      <div className={styles.chartWrapper}>
+        <ConvertorChartDurationChanger />
       </div>
     </main>
   );

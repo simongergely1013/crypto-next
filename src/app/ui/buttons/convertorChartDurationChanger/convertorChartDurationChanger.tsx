@@ -1,13 +1,13 @@
 "use client";
 import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
-import { setDuration } from "@/app/lib/features/app/btcChartDurationSlice";
-import { setStyles } from "./btcChartsDurationChanger.styles";
-import { setButtonColors } from "./setButtonColors";
+import { setDuration } from "@/app/lib/features/app/convertorSlice";
+import { setStyles } from "./convertorChartDurationChanger.styles";
+import { setButtonColors } from "../btcChartsDurationChanger/setButtonColors";
 import React from "react";
 
-const BtcChartsDurationChanger = () => {
+const ConvertorChartDurationChanger = () => {
   const { isDark } = useAppSelector((state) => state.theme);
-  const { duration } = useAppSelector((state) => state.btcChartDuration);
+  const { duration } = useAppSelector((state) => state.convertor);
   const styles = setStyles(isDark);
   const dispatch = useAppDispatch();
 
@@ -91,4 +91,4 @@ const BtcChartsDurationChanger = () => {
   );
 };
 
-export default BtcChartsDurationChanger;
+export default ConvertorChartDurationChanger;

@@ -6,7 +6,7 @@ export const setStyles = (condition: boolean) => {
     headerContainer: "flex flex-col gap-2 mb-10",
     header: "text-xl font-medium",
     date: "text-base flex gap-2",
-    convertorWrapper: "relative flex gap-8",
+    convertorWrapper: "relative flex gap-8 mb-20",
     convertorContainer: "w-1/2 p-6 rounded-xl",
     convertorHeader: "text-sm mb-6",
     inputsContainer: "relative flex justify-between py-2 my-3 border-b",
@@ -24,5 +24,6 @@ export const setStyles = (condition: boolean) => {
     secondaryText: condition ? "text-[#9E9E9E]" : "text-[#424286CC]",
     bgColor: condition ? "bg-[#191932]" : "bg-white",
     currencyIcon: "absolute left-2.5 top-4",
+    chartWrapper: "border",
   };
 };
