@@ -4,19 +4,17 @@ import { useAppSelector, useAppDispatch } from "../lib/hooks";
 import {
   setCurrencySell,
   setCurrencyBuy,
+  setSellAmount,
+  setBuyAmount,
 } from "../lib/features/app/convertorSlice";
 import { setStyles } from "./styles";
 import Link from "next/link";
-import UsdIcon from "../ui/icons/usdIcon";
-import EuroIcon from "../ui/icons/euroIcon";
-import BtcIcon from "../ui/icons/btcIcon";
-import EthIcon from "../ui/icons/ethIcon";
-import GbpIcon from "../ui/icons/gbpIcon";
+import SetCurrencyIcon from "../ui/currencyIcons/setCurrencyIcon";
 import ConversionButton from "../ui/buttons/conversionButton/conversionButton";
 
 export default function Page() {
   const { isDark } = useAppSelector((state) => state.theme);
-  const { currencySell, currencyBuy } = useAppSelector(
+  const { currencySell, currencyBuy, sellAmount, buyAmount } = useAppSelector(
     (state) => state.convertor
   );
   const [currentDate, setCurrentDate] = useState<string>("");
@@ -34,21 +32,14 @@ export default function Page() {
     dispatch(setCurrencyBuy(newCurrency));
   };
 
-  const setIcon = (currency: string) => {
-    switch (currency) {
-      case "usd":
-        return <UsdIcon />;
-      case "eur":
-        return <EuroIcon />;
-      case "gbp":
-        return <GbpIcon />;
-      case "btc":
-        return <BtcIcon />;
-      case "eth":
-        return <EthIcon />;
-      default:
-        return;
-    }
+  const handleSellAmountChange = (e: any) => {
+    const newAmount = e.target.value;
+    dispatch(setSellAmount(newAmount));
+  };
+
+  const handleBuyAmountChange = (e: any) => {
+    const newAmount = e.target.value;
+    dispatch(setBuyAmount(newAmount));
   };
 
   useEffect(() => {
@@ -88,7 +79,9 @@ export default function Page() {
             You sell
           </h5>
           <div className={styles.inputsContainer}>
-            <div className={styles.currencyIcon}>{setIcon(currencySell)}</div>
+            <div className={styles.currencyIcon}>
+              <SetCurrencyIcon currency={currencySell} />
+            </div>
             <select
               className={`${styles.select} ${styles.bgColor} ${styles.primaryText}`}
               onChange={handleSellChange}
@@ -103,6 +96,8 @@ export default function Page() {
               className={`${styles.input} ${styles.bgColor} ${styles.primaryText}`}
               type="number"
               placeholder="Select amount..."
+              onChange={handleSellAmountChange}
+              value={sellAmount}
             />
           </div>
           <div>
@@ -119,7 +114,9 @@ export default function Page() {
             You buy
           </h5>
           <div className={styles.inputsContainer}>
-            <div className={styles.currencyIcon}>{setIcon(currencyBuy)}</div>
+            <div className={styles.currencyIcon}>
+              <SetCurrencyIcon currency={currencyBuy} />
+            </div>
             <select
               className={`${styles.select} ${styles.bgColor} ${styles.primaryText}`}
               onChange={handleBuyChange}
@@ -134,6 +131,8 @@ export default function Page() {
               className={`${styles.input} ${styles.bgColor} ${styles.primaryText}`}
               type="number"
               placeholder="Select amount..."
+              onChange={handleBuyAmountChange}
+              value={buyAmount}
             />
           </div>
           <div>

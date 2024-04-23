@@ -1,13 +1,9 @@
 "use client";
 import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
 import { setCurrency } from "@/app/lib/features/app/currencySlice";
+import SetCurrencyIcon from "@/app/ui/currencyIcons/setCurrencyIcon";
 import { setStyles } from "./currencyChange.styles";
 import React from "react";
-import UsdIcon from "../icons/usdIcon";
-import EuroIcon from "../icons/euroIcon";
-import GbpIcon from "../icons/gbpIcon";
-import BtcIcon from "../icons/btcIcon";
-import EthIcon from "../icons/ethIcon";
 
 const CurrencyChange = () => {
   const { currency } = useAppSelector((state) => state.currency);
@@ -20,26 +16,11 @@ const CurrencyChange = () => {
     dispatch(setCurrency(newCurrency));
   };
 
-  const setIcon = (currency: string) => {
-    switch (currency) {
-      case "usd":
-        return <UsdIcon />;
-      case "eur":
-        return <EuroIcon />;
-      case "gbp":
-        return <GbpIcon />;
-      case "btc":
-        return <BtcIcon />;
-      case "eth":
-        return <EthIcon />;
-      default:
-        return;
-    }
-  };
-
   return (
     <div className={`${styles.main} ${styles.bgColor}`}>
-      <div className={styles.currencyIcon}>{setIcon(currency)}</div>
+      <div className={styles.currencyIcon}>
+        <SetCurrencyIcon currency={currency} />
+      </div>
       <select
         className={`${styles.select} ${styles.textColor} ${styles.bgColor}`}
         onChange={handleChange}
