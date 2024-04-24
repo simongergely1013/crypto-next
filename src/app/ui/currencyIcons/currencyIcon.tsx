@@ -9,7 +9,7 @@ interface Props {
   currency: string;
 }
 
-const SetCurrencyIcon = ({ currency }: Props) => {
+const CurrencyIcon = ({ currency }: Props) => {
   return currency === "usd" ? (
     <UsdIcon />
   ) : currency === "eur" ? (
@@ -23,4 +23,4 @@ const SetCurrencyIcon = ({ currency }: Props) => {
   );
 };
 
-export default SetCurrencyIcon;
+export default CurrencyIcon;

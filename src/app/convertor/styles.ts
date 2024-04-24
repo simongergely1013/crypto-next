@@ -12,8 +12,6 @@ export const setStyles = (condition: boolean) => {
     inputsContainer: "relative flex justify-between py-2 my-3 border-b",
     select: "w-1/4 py-2 pr-2 pl-10 font-medium",
     input: "w-1/3 pl-2 font-bold",
-    inputIndexL: "pl-4 text-sm",
-    inputIndexR: "pl-1 text-sm",
     button:
       "w-[244px] h-[45px] flex justify-center items-center bg-[#232337] bg-opacity-50 transition-bg ease-in-out rounded",
     buttonColors: condition

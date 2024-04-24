@@ -7,18 +7,24 @@ import {
   setSellAmount,
   setBuyAmount,
 } from "../lib/features/app/convertorSlice";
+import { setCurrencyId } from "../ui/btcVsCurrencyIndex/utils";
 import { setStyles } from "./styles";
 import Link from "next/link";
-import SetCurrencyIcon from "../ui/currencyIcons/setCurrencyIcon";
+import CurrencyIcon from "../ui/currencyIcons/currencyIcon";
 import ConversionButton from "../ui/buttons/conversionButton/conversionButton";
 import ConvertorChartDurationChanger from "../ui/buttons/convertorChartDurationChanger/convertorChartDurationChanger";
-import BtcVsCurrencyIndex from "../ui/btcVsCurrencyIndex/btcVsCurrencyIndex";
+import BtcVsCurrencySellIndex from "../ui/btcVsCurrencyIndex/btcVsCurrencySellIndex";
+import BtcVsCurrencyBuyIndex from "../ui/btcVsCurrencyIndex/btcVsCurrencyBuyIndex";
 
 export default function Page() {
   const { isDark } = useAppSelector((state) => state.theme);
-  const { currencySell, currencyBuy, sellAmount, buyAmount } = useAppSelector(
-    (state) => state.convertor
-  );
+  const {
+    currencySell,
+    currencyBuy,
+    sellAmount,
+    buyAmount,
+    currencyBuyVsCurrencySell,
+  } = useAppSelector((state) => state.convertor);
   const [currentDate, setCurrentDate] = useState<string>("");
   const [currentLocalTime, setCurrentLocalTime] = useState<string>("");
 
@@ -45,17 +51,17 @@ export default function Page() {
     dispatch(setBuyAmount(newAmount));
   };
 
-  // const handleConversionClick = () => {
-  //   if (sellAmount === "" && buyAmount === "") {
-  //     return;
-  //   } else if (sellAmount !== "" && buyAmount === "") {
-  //     //const conversionResult = sellAmount / price of currencyBuy
-  //     //dispatch(setBuyAmount(conversionResult))
-  //   } else if (sellAmount === "" && buyAmount !== "") {
-  //     // const conversionResult = buyAmount * price of currencyBuy
-  //     // dispatch(setSellAmount(conversionResult))
-  //   }
-  // };
+  const handleConversionButtonClick = () => {
+    if (sellAmount === "" && buyAmount === "") {
+      return;
+    } else if (sellAmount !== "" && buyAmount === "") {
+      const conversionResult = Number(sellAmount) / currencyBuyVsCurrencySell;
+      dispatch(setBuyAmount(conversionResult));
+    } else if (sellAmount === "" && buyAmount !== "") {
+      const conversionResult = Number(buyAmount) * currencyBuyVsCurrencySell;
+      dispatch(setSellAmount(conversionResult));
+    }
+  };
 
   useEffect(() => {
     const date: Date | string = new Date();
@@ -101,14 +107,14 @@ export default function Page() {
         </p>
       </div>
       <div className={styles.convertorWrapper}>
-        <ConversionButton />
+        <ConversionButton onClick={handleConversionButtonClick} />
         <div className={`${styles.convertorContainer} ${styles.bgColor}`}>
           <h5 className={`${styles.secondaryText} ${styles.convertorHeader}`}>
             You sell
           </h5>
           <div className={styles.inputsContainer}>
             <div className={styles.currencyIcon}>
-              <SetCurrencyIcon currency={currencySell} />
+              <CurrencyIcon currency={currencySell} />
             </div>
             <select
               className={`${styles.select} ${styles.bgColor} ${styles.primaryText}`}
@@ -128,7 +134,10 @@ export default function Page() {
               value={sellAmount}
             />
           </div>
-          <BtcVsCurrencyIndex currency={currencySell} />
+          <BtcVsCurrencySellIndex
+            currency={currencySell}
+            currencyId={setCurrencyId(currencyBuy)}
+          />
         </div>
         <div className={`${styles.convertorContainer} ${styles.bgColor}`}>
           <h5 className={`${styles.secondaryText} ${styles.convertorHeader}`}>
@@ -136,7 +145,7 @@ export default function Page() {
           </h5>
           <div className={styles.inputsContainer}>
             <div className={styles.currencyIcon}>
-              <SetCurrencyIcon currency={currencyBuy} />
+              <CurrencyIcon currency={currencyBuy} />
             </div>
             <select
               className={`${styles.select} ${styles.bgColor} ${styles.primaryText}`}
@@ -156,7 +165,10 @@ export default function Page() {
               value={buyAmount}
             />
           </div>
-          <BtcVsCurrencyIndex currency={currencyBuy} />
+          <BtcVsCurrencyBuyIndex
+            currency={currencyBuy}
+            currencyId={setCurrencyId(currencySell)}
+          />
         </div>
       </div>
       <div className={styles.chartWrapper}>

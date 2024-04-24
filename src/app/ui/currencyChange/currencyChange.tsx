@@ -1,7 +1,7 @@
 "use client";
 import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
 import { setCurrency } from "@/app/lib/features/app/currencySlice";
-import SetCurrencyIcon from "@/app/ui/currencyIcons/setCurrencyIcon";
+import SetCurrencyIcon from "@/app/ui/currencyIcons/currencyIcon";
 import { setStyles } from "./currencyChange.styles";
 import React from "react";
 

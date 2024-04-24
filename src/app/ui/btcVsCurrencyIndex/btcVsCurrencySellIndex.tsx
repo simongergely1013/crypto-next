@@ -1,19 +1,24 @@
-import { useAppSelector } from "@/app/lib/hooks";
+import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
+import { setCurrencyBuyVsCurrencySell } from "@/app/lib/features/app/convertorSlice";
 import React, { useState, useEffect } from "react";
 import { setStyles } from "./btcVsCurrency.styles";
-import { setBtcVsCurrencyURL } from "./utils";
+import { setURL } from "./utils";
 import { fetchOptions } from "@/app/lib/fetchOptions";
 import LoaderBtcVsCurrency from "../loaders/loaderBtcVsCurrency";
 
 interface Props {
   currency: string;
+  currencyId: string;
 }
 
-const BtcVsCurrencyIndex = ({ currency }: Props) => {
-  const [btcPriceInCurrency, setBtcPriceInCurrency] = useState<any>(null);
+const BtcVsCurrencySellIndex = ({ currency, currencyId }: Props) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { isDark } = useAppSelector((state) => state.theme);
+  const { currencyBuy, currencyBuyVsCurrencySell } = useAppSelector(
+    (state) => state.convertor
+  );
   const styles = setStyles(isDark);
+  const dispatch = useAppDispatch();
 
   const formatter = new Intl.NumberFormat("en", {
     style: "currency",
@@ -23,11 +28,11 @@ const BtcVsCurrencyIndex = ({ currency }: Props) => {
   useEffect(() => {
     setIsLoading(true);
     try {
-      const url = setBtcVsCurrencyURL(currency);
+      const url = setURL(currency, currencyId);
       fetch(url, fetchOptions)
         .then((res) => res.json())
         .then((json) => {
-          setBtcPriceInCurrency(json);
+          dispatch(setCurrencyBuyVsCurrencySell(json[currencyId][currency]));
         })
         .catch((err) => {
           // eslint-disable-next-line
@@ -38,21 +43,21 @@ const BtcVsCurrencyIndex = ({ currency }: Props) => {
       console.log(error);
     }
     setIsLoading(false);
-  }, [currency]);
+  }, [currency, currencyId]);
 
   return (
     <>
       {isLoading ? (
         <LoaderBtcVsCurrency />
       ) : (
-        btcPriceInCurrency &&
+        currencyBuyVsCurrencySell !== 0 &&
         !isLoading && (
           <div>
             <span className={`${styles.secondaryText} ${styles.inputIndexL}`}>
-              1 BTC =
+              1 {currencyBuy.toUpperCase()} =
             </span>
             <span className={`${styles.primaryText} ${styles.inputIndexR}`}>
-              {formatter.format(btcPriceInCurrency.bitcoin[currency])}
+              {formatter.format(currencyBuyVsCurrencySell)}
             </span>
           </div>
         )
@@ -61,4 +66,4 @@ const BtcVsCurrencyIndex = ({ currency }: Props) => {
   );
 };
 
-export default BtcVsCurrencyIndex;
+export default BtcVsCurrencySellIndex;

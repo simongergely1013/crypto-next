@@ -5,6 +5,8 @@ interface InitialState {
   currencyBuy: string;
   sellAmount: string | number;
   buyAmount: string | number;
+  currencyBuyVsCurrencySell: number;
+  currencySellVsCurrencyBuy: number;
   duration: string;
 }
 
@@ -13,6 +15,8 @@ const initialState: InitialState = {
   currencyBuy: "btc",
   sellAmount: "",
   buyAmount: "",
+  currencyBuyVsCurrencySell: 0,
+  currencySellVsCurrencyBuy: 0,
   duration: "1D",
 };
 
@@ -37,6 +41,12 @@ const convertor = createSlice({
     setDuration(state, action: PayloadAction<string>) {
       state.duration = action.payload;
     },
+    setCurrencyBuyVsCurrencySell(state, action: PayloadAction<number>) {
+      state.currencyBuyVsCurrencySell = action.payload;
+    },
+    setCurrencySellVsCurrencyBuy(state, action: PayloadAction<number>) {
+      state.currencySellVsCurrencyBuy = action.payload;
+    },
   },
 });
 
@@ -46,5 +56,7 @@ export const {
   setSellAmount,
   setBuyAmount,
   setDuration,
+  setCurrencyBuyVsCurrencySell,
+  setCurrencySellVsCurrencyBuy,
 } = convertor.actions;
 export default convertor.reducer;

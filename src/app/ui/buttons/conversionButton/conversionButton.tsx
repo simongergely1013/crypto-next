@@ -2,12 +2,12 @@ import { useAppSelector } from "@/app/lib/hooks";
 import React from "react";
 import { setStyles } from "./conversionButton.styles";
 
-const ConversionButton = () => {
+const ConversionButton = ({ onClick }: any) => {
   const { isDark } = useAppSelector((state) => state.theme);
   const styles = setStyles(isDark);
   return (
     <div className={styles.wrapper}>
-      <div className={`${styles.circle} ${styles.bg}`}>
+      <div className={`${styles.circle} ${styles.bg}`} onClick={onClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
