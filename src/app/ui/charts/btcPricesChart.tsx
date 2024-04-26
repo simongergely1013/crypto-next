@@ -1,12 +1,7 @@
 import { coinsTableData } from "@/app/lib/placerholder-data";
 import { options, pricesData } from "@/app/lib/btcCharts-options-data";
 import { useAppSelector } from "@/app/lib/hooks";
-import {
-  setBackgroundColor,
-  setChartTextPrimary,
-  setChartTextSecondary,
-} from "./colorSetters";
-import { styles } from "./bigCharts.styles";
+import { setStyles } from "./bigCharts.styles";
 import React from "react";
 import {
   Chart as ChartJS,
@@ -43,6 +38,7 @@ const BtcPricesChart = ({ coinName, symbol }: PriceChartProps) => {
     style: "currency",
     currency,
   });
+  const styles = setStyles(isDark);
 
   const currentCoinData = coinsTableData.find(
     (el) => el.id === coinName.toLowerCase()
@@ -72,19 +68,17 @@ const BtcPricesChart = ({ coinName, symbol }: PriceChartProps) => {
   //useEffect here to fetch data based on duration prop
   //https://api.coingecko.com/api/v3/coins/{id}
   return (
-    <div className={`${styles.wrapper} ${setBackgroundColor(isDark)}`}>
-      <div
-        className={`${styles.infoContainer} ${setChartTextSecondary(isDark)}`}
-      >
-        <div className={`${styles.coinName} ${setChartTextSecondary(isDark)}`}>
+    <div className={`${styles.wrapper} ${styles.bg}`}>
+      <div className={`${styles.infoContainer} ${styles.textSecondary}`}>
+        <div className={`${styles.coinName} ${styles.textSecondary}`}>
           <span>{coinName}</span>
           <span>({symbol.toUpperCase()})</span>
         </div>
-        <div className={`${styles.price} ${setChartTextPrimary(isDark)}`}>
+        <div className={`${styles.price} ${styles.textPrimary}`}>
           {formatter.format(currentPrice)}
         </div>
       </div>
-      <div className={`${styles.date} ${setChartTextSecondary(isDark)}`}>
+      <div className={`${styles.date} ${styles.textSecondary}`}>
         {currentDate}
       </div>
       <div className={styles.chart}>

@@ -1,6 +1,6 @@
 export const setStyles = (condition: boolean) => {
   return {
-    main: "flex min-h-screen flex-col px-20 py-6 border",
+    main: "flex min-h-screen flex-col px-20 py-6",
     mainBg: condition ? "bg-dark-primaryBg" : "bg-slate-200",
     linksContainer: "flex mb-10",
     headerContainer: "flex flex-col gap-2 mb-10",
@@ -22,6 +22,6 @@ export const setStyles = (condition: boolean) => {
     secondaryText: condition ? "text-[#9E9E9E]" : "text-[#424286CC]",
     bgColor: condition ? "bg-[#191932]" : "bg-white",
     currencyIcon: "absolute left-2.5 top-4",
-    chartWrapper: "border",
+    chartWrapper: "rounded-xl",
   };
 };

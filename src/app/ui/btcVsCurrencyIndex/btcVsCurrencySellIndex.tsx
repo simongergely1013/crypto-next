@@ -43,6 +43,7 @@ const BtcVsCurrencySellIndex = ({ currency, currencyId }: Props) => {
       console.log(error);
     }
     setIsLoading(false);
+    // eslint-disable-next-line
   }, [currency, currencyId]);
 
   return (

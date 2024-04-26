@@ -15,6 +15,7 @@ import ConversionButton from "../ui/buttons/conversionButton/conversionButton";
 import ConvertorChartDurationChanger from "../ui/buttons/convertorChartDurationChanger/convertorChartDurationChanger";
 import BtcVsCurrencySellIndex from "../ui/btcVsCurrencyIndex/btcVsCurrencySellIndex";
 import BtcVsCurrencyBuyIndex from "../ui/btcVsCurrencyIndex/btcVsCurrencyBuyIndex";
+import ConvertorChart from "../ui/charts/convertorChart";
 
 export default function Page() {
   const { isDark } = useAppSelector((state) => state.theme);
@@ -69,19 +70,6 @@ export default function Page() {
     const timeString = date.toLocaleTimeString();
     setCurrentDate(dateString);
     setCurrentLocalTime(timeString);
-  }, []);
-
-  //This is for to FETCH CHART DATA
-  useEffect(() => {
-    // const url = 'https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${currencySell}&days=1';
-    // const options = {
-    //   method: 'GET',
-    //   headers: {accept: 'application/json', 'x-cg-demo-api-key': 'CG-aTQgu4r1cVmGP6poTHARfod9'}
-    // };
-    // fetch(url, options)
-    //   .then(res => res.json())
-    //   .then(json => console.log(json))
-    //   .catch(err => console.error('error:' + err));
   }, []);
 
   return (
@@ -172,6 +160,7 @@ export default function Page() {
         </div>
       </div>
       <div className={styles.chartWrapper}>
+        <ConvertorChart />
         <ConvertorChartDurationChanger />
       </div>
     </main>
