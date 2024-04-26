@@ -1,4 +1,5 @@
-import { styles } from "../styles";
+import { setStyles } from "../styles";
+const styles = setStyles();
 
 export const setCoinSlideColors = (
   symbol: string,

@@ -1,53 +1,28 @@
 "use client";
-import React from "react";
 import { useAppSelector, useAppDispatch } from "@/app/lib/hooks";
-import { styles } from "./currencyChange.styles";
 import { setCurrency } from "@/app/lib/features/app/currencySlice";
-import UsdIcon from "../icons/usdIcon";
-import EuroIcon from "../icons/euroIcon";
-import GbpIcon from "../icons/gbpIcon";
-import BtcIcon from "../icons/btcIcon";
-import EthIcon from "../icons/ethIcon";
+import SetCurrencyIcon from "@/app/ui/currencyIcons/currencyIcon";
+import { setStyles } from "./currencyChange.styles";
+import React from "react";
 
 const CurrencyChange = () => {
   const { currency } = useAppSelector((state) => state.currency);
   const { isDark } = useAppSelector((state) => state.theme);
+  const styles = setStyles(isDark);
   const dispatch = useAppDispatch();
-
-  const bgColor = isDark
-    ? "bg-dark-navTopBg border border-slate-700"
-    : "bg-slate-200";
-  const textColor = isDark
-    ? "text-dark-textPrimary"
-    : "text-light-textSecondary";
 
   const handleChange = (e: any) => {
     const newCurrency = e.target.value;
     dispatch(setCurrency(newCurrency));
   };
 
-  const setIcon = (currency: string) => {
-    switch (currency) {
-      case "usd":
-        return <UsdIcon />;
-      case "eur":
-        return <EuroIcon />;
-      case "gbp":
-        return <GbpIcon />;
-      case "btc":
-        return <BtcIcon />;
-      case "eth":
-        return <EthIcon />;
-      default:
-        return;
-    }
-  };
-
   return (
-    <div className={`${styles.main} ${bgColor}`}>
-      <div className={styles.currencyIcon}>{setIcon(currency)}</div>
+    <div className={`${styles.main} ${styles.bgColor}`}>
+      <div className={styles.currencyIcon}>
+        <SetCurrencyIcon currency={currency} />
+      </div>
       <select
-        className={`${styles.select} ${textColor} ${bgColor}`}
+        className={`${styles.select} ${styles.textColor} ${styles.bgColor}`}
         onChange={handleChange}
       >
         <option value="usd">USD</option>

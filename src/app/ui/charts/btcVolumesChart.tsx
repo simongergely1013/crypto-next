@@ -1,13 +1,8 @@
 import { btcChartsData, coinsTableData } from "@/app/lib/placerholder-data";
 import { options, volumesData } from "@/app/lib/btcCharts-options-data";
-import { styles } from "./bigCharts.styles";
+import { setStyles } from "./bigCharts.styles";
 import { useAppSelector } from "@/app/lib/hooks";
 import React from "react";
-import {
-  setBackgroundColor,
-  setChartTextPrimary,
-  setChartTextSecondary,
-} from "./colorSetters";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -34,6 +29,7 @@ interface VolumeChartProps {
 const BtcVolumesChart = ({ coinName }: VolumeChartProps) => {
   const { isDark } = useAppSelector((state) => state.theme);
   const { currency } = useAppSelector((state) => state.currency);
+  const styles = setStyles(isDark);
   const formatter = Intl.NumberFormat("en", {
     notation: "compact",
     style: "currency",
@@ -67,18 +63,16 @@ const BtcVolumesChart = ({ coinName }: VolumeChartProps) => {
   //useEffect here to fetch data based on duration prop
 
   return (
-    <div className={`${styles.wrapper} ${setBackgroundColor(isDark)}`}>
-      <div
-        className={`${styles.infoContainer} ${setChartTextSecondary(isDark)}`}
-      >
-        <div className={`${styles.coinName} ${setChartTextSecondary(isDark)}`}>
+    <div className={`${styles.wrapper} ${styles.bg}`}>
+      <div className={`${styles.infoContainer} ${styles.textSecondary}`}>
+        <div className={`${styles.coinName} ${styles.textSecondary}`}>
           <span>24h Volume</span>
         </div>
-        <div className={`${styles.price} ${setChartTextPrimary(isDark)}`}>
+        <div className={`${styles.price} ${styles.textPrimary}`}>
           {formatter.format(totalVolume)}
         </div>
       </div>
-      <div className={`${styles.date} ${setChartTextSecondary(isDark)}`}>
+      <div className={`${styles.date} ${styles.textSecondary}`}>
         {currentDate}
       </div>
       <div className={styles.chart}>
